@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 2px -2px;
+}
+
+.navbar-logo a {
+    color: #111111;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-family: 'Amiko', sans-serif;
+    margin: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.navbar-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Amiko', sans-serif;
+    font-weight: 400;
+}
+
+.navbar-links li:not(:last-child) {
+    margin-right: 10px;
+  }
+  
+  .navbar-links li:last-child {
+    margin-right: 3rem;
+}
+
+  
+.navbar-links li a {
+    color: #111111;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+    background-color: #439EFF; 
+    color: #ffffff;
+    text-decoration: underline;
+}
