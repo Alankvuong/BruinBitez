@@ -5,11 +5,12 @@ import {
   Route,
   Navigate
 } from 'react-router-dom'
+import RidePost from './components/RidePost'
 
 function App() {
   return (
     <div>
-      hi
+      <RidePost />
     </div>
   );
 }
