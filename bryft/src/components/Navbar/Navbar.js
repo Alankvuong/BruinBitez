@@ -20,7 +20,7 @@ function Navbar() {
                         <Link to="/rides">Rides</Link>
                     </li>
                     <li>
-                        <Link to="/profile">Profile</Link>
+                        <Link to="/user-profile">Profile</Link>
                     </li>
                 </ul>
         </nav>
