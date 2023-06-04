@@ -91,8 +91,8 @@
     flex-direction: row;
     display: flex;
     border-radius: 8px;
-    border-width: 1px;
-    border-color: gray;
+    border-width: 1.5px;
+    border-color: rgba(207, 205, 205, 0.959);
     border-style: solid;
     cursor: pointer;
     justify-content: center;
@@ -101,6 +101,11 @@
     width: 33%;
     height: 2.2em;
     margin-top: 4%;
+}
+
+.googleContainer:hover {
+	background: rgb(231, 231, 231);
+    transition:ease-out;
 }
 
 .googleLogo {
@@ -118,4 +123,12 @@
     align-self: center;
     margin-left: 6.5%;
     padding-top: 1%;
+}
+
+.divideContainer {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    height: 5px;
+    margin-top: 6%;
 }

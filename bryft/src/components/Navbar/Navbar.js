@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-// import { Popup } from "reactjs-popup";
 import Modal from 'react-modal';
 import { Link, Navigate } from "react-router-dom";
 import {UserAuth} from '../../context/AuthContext'
 import "./Navbar.css";
+// import LoginForm from "../LoginForm";
 
 
 function Navbar() {
@@ -105,6 +105,14 @@ function Navbar() {
                                             <img src={require("../../assets/google-logo.png")} alt="google logo" className="googleLogo"/>
                                             <div className="googleText">Google</div>
                                         </div>
+                                    </div>
+                                    <div className="divideContainer">
+                                        <hr style={{width: '44%', marginTop: '2.2%', color: 'lightgrey'}}/>
+                                        <div>or</div>
+                                        <hr style={{width: '44%', marginTop: '2.2%', color: 'lightgrey'}}/>
+                                    </div>
+                                    <div>
+                                    
                                     </div>
                                 </div>
                                 </Modal>
