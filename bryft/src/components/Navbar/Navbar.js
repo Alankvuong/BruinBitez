@@ -59,7 +59,7 @@ function Navbar() {
                             <button onClick={handleSignOut}>Logout</button>
                         ) : ( 
                         <div>
-                            <button onClick={openModal}>Open Modal</button>
+                            <button onClick={openModal} className="loginButton">Login</button>
                             <div className="modalContainer">
                                 <Modal
                                     isOpen={modalIsOpen}
@@ -86,7 +86,6 @@ function Navbar() {
                                     }}
                                     contentLabel="Login Modal"
                                 >
-                                {/* <button onClick={handleSignIn}>Sign In</button> */}
                                 <div>
                                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                                         <div className="popupLogo">

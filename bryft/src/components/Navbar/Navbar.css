@@ -21,6 +21,7 @@
 .navbar-links {
     display: flex;
     list-style: none;
+    align-items: center;
     margin: 0;
     padding: 0;
     font-family: 'Amiko', sans-serif;
@@ -49,6 +50,24 @@
     background-color: #439EFF; 
     color: #ffffff;
     text-decoration: underline;
+}
+
+.loginButton {
+    font-family: 'Amiko', sans-serif;
+    border-radius: 20px;
+    border-width: 0px;
+    background-color: #439EFF;
+    color: white;
+    font-weight: bold;
+    padding: 4px 18px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.loginButton:hover {
+    background-color: #388ae1;
+    transition:ease-out;
 }
 
 .popupLogo {
