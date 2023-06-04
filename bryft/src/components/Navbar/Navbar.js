@@ -6,8 +6,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../../firebase'
 import "./Navbar.css";
-// import LoginForm from "../LoginForm";
-
 
 function Navbar() {
     const {user, logOut} = UserAuth();
@@ -120,7 +118,6 @@ function Navbar() {
                             <div className="modalContainer">
                                 <Modal
                                     isOpen={modalIsOpen}
-                                    // onRequestClose={closeModal}
                                     style={{
                                         overlay: {
                                             width: '100%',
