@@ -23,13 +23,13 @@ function AboutPage() {
                     connect with us
                 </h2>
                 <div style={{ display: 'flex', justifyContent: 'center'}}>
-                <IconButton button component={Link} to="youtube.com">
+                <IconButton button component={Link} to="mailto:bryftucla@gmail.com">
                     <Email fontSize = "large"/>
                 </IconButton>
-                <IconButton button component={Link} to="youtube.com">
+                <IconButton button component={Link} to="https://www.instagram.com">
                     <Instagram fontSize = "large"/>
                 </IconButton>
-                <IconButton button component={Link} to="youtube.com">
+                <IconButton button component={Link} to="https://www.linkedin.com">
                     <LinkedIn fontSize = "large"/>
                 </IconButton>
                 </div>
