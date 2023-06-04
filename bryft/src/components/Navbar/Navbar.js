@@ -31,7 +31,7 @@ function Navbar() {
       }
 
     function closeModal() {
-    setIsOpen(false);
+        setIsOpen(false);
     }
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -88,8 +88,13 @@ function Navbar() {
                                 >
                                 {/* <button onClick={handleSignIn}>Sign In</button> */}
                                 <div>
-                                    <div className="popupLogo">
-                                        BRYFT
+                                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                                        <div className="popupLogo">
+                                            BRYFT
+                                        </div>
+                                        <div onClick={closeModal} style={{borderWidth: 2, cursor: 'pointer'}}>
+                                            <img src={require("../../assets/ex.png")} alt="exit button" className="exButton" />
+                                        </div>
                                     </div>
                                     <div className="welcomeMessage">
                                         Welcome back!

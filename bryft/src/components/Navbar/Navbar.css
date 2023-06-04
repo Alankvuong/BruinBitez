@@ -61,6 +61,13 @@
     text-align: center;
     margin-top: 3.5%;
 }
+.exButton {
+    position: absolute;
+    height: 4.5%;
+    width: 6%;
+    top: 3.7%;
+    left: 90%;
+}
 
 .welcomeMessage {
     color: #111111;
