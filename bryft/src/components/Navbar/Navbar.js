@@ -86,8 +86,21 @@ function Navbar() {
                                     }}
                                     contentLabel="Login Modal"
                                 >
-                                <button onClick={handleSignIn}>Sign In</button>
-                                <div>I am a modal</div>
+                                {/* <button onClick={handleSignIn}>Sign In</button> */}
+                                <div>
+                                    <div className="popupLogo">
+                                        BRYFT
+                                    </div>
+                                    <div className="welcomeMessage">
+                                        Welcome back!
+                                    </div>
+                                    <div className="descriptionMessage">
+                                        Please enter your details to sign in.
+                                    </div>
+                                    <button onClick={handleSignIn} className="signInButton">
+                                        Sign In
+                                    </button>
+                                </div>
                                 </Modal>
                             </div>
                         </div>
