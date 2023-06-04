@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import HomePage from "./pages/HomePage/HomePage";
 import RidesPage from "./pages/RidesPage/RidesPage";
+import DriverProfile from './pages/DriverProfilePage/DriverProfile';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         {/* <Route exact path="/about" element={<AboutPage/>} /> */}
         {/* <Route exact path="/login" element={<LoginPage/>} /> */}
         <Route exact path="/rides" element={<RidesPage/>} />
+        {/* <Route exact path="/rides" element={<RidesPage/>} /> */}
+        <Route exact path="/driver-profile" element={<DriverProfile/>} />
       </Routes>
     </Router>
   // <div>
