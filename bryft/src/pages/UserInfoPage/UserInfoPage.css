@@ -10,7 +10,7 @@
     color: #438EFF;
 }
 
-.use {
+.mainform {
     font-family: 'Amiko', sans-serif;
     font-size: 20px;
     margin: 0 auto;
@@ -18,14 +18,14 @@
     padding: 20px;
 }
 
-.use label {
+.mainform label {
     text-align: left;
     display: block;
     color: #438EFF;
     font-weight: bold;
 }
 
-.use input, .use textarea {
+input, textarea {
     width: 100%;
     padding: 6px 10px;
     margin: 10px 0;
@@ -39,11 +39,11 @@
     font-family: 'Amiko', sans-serif;
 }
 
-.use textarea {
+textarea {
     height: 200px;
 }
 
-.use button {
+button {
     background: #438EFF;
     color: white;
     font-family: 'Amiko', sans-serif;
@@ -54,7 +54,7 @@
     margin: 10px;
 }
 
-.use button:hover {
+button:hover {
     background-color: #176ff2;
 }
 

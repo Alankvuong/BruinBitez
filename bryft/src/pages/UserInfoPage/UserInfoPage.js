@@ -16,7 +16,7 @@ function UserInfoPage() {
         <div>
             <Navbar />
             <h1 className="title">thanks, now tell us more about yourself!</h1>
-            <div className="use">
+            <div className="mainform">
                 <form>
                     <label>car model</label>
                     <input
@@ -33,7 +33,6 @@ function UserInfoPage() {
                         value={bio}
                         onChange={(e) =>setBio(e.target.value)}
                     />
-
                     <div>
                         <label>upload a pic</label>
                         {selectedImage && (

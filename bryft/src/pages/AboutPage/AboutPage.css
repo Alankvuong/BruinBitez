@@ -15,7 +15,7 @@
     font-size: 30px;
     font-weight: bold;
     padding-top: 15px;
-    text-align: center;
+    text-align: center !important;
     color: #438EFF;
 }
 
@@ -34,7 +34,7 @@
     text-align: center;
 }
 
-.brick {
+.maindiv { 
     margin: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -51,8 +51,23 @@
     );
 }
 
-.flex-row {
+.headshot-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+  }
+  
+  .headshot {
+    width: 20%;
+    max-width: 200px;
+    margin: 0 10px;
+  }
+  
+  .spacer {
+    width: 15px;
+  }
+
+  .icons {
+    display: flex; 
     justify-content: center;
   }
