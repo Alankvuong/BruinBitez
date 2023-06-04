@@ -59,6 +59,7 @@
     margin-bottom: '2%';
     letter-spacing: 3px;
     text-align: center;
+    margin-top: 3.5%;
 }
 
 .welcomeMessage {
@@ -79,6 +80,42 @@
     margin-top: 1%;
 }
 
-.signInButton {
-      
+.signInButtonContainer {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    /* border-style: solid; */
+}
+
+.googleContainer {
+    flex-direction: row;
+    display: flex;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: gray;
+    border-style: solid;
+    cursor: pointer;
+    justify-content: center;
+    padding-top: 0.2%;
+    padding-bottom: 0.2%;
+    width: 33%;
+    height: 2.2em;
+    margin-top: 4%;
+}
+
+.googleLogo {
+    max-height: 65%;
+    max-width: 65%;
+    align-self: center;
+    /* border-style: solid; */
+}
+
+.googleText {
+    color: black;
+    font-size: 1.1rem;
+    font-family: 'Amiko', sans-serif;
+    font-weight: bolder;
+    align-self: center;
+    margin-left: 6.5%;
+    padding-top: 1%;
 }

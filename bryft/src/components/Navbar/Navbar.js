@@ -97,9 +97,15 @@ function Navbar() {
                                     <div className="descriptionMessage">
                                         Please enter your details to sign in.
                                     </div>
-                                    <button onClick={handleSignIn} className="signInButton">
+                                    {/* <button onClick={handleSignIn} className="signInButton">
                                         Sign In
-                                    </button>
+                                    </button> */}
+                                    <div className="signInButtonContainer">
+                                        <div onClick={handleSignIn} className="googleContainer">
+                                            <img src={require("../../assets/google-logo.png")} alt="google logo" className="googleLogo"/>
+                                            <div className="googleText">Google</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 </Modal>
                             </div>
