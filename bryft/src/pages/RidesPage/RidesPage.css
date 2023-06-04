@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+.title-text {
+    font-family: 'amiko';
+    color: #439EFF;
+}
+
+.ride-button {
+    background-color: #439EFF;
+    color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 12px 20px;
+    font-weight: bold;
+    font-family: 'amiko';
+    cursor: pointer
+  }
+  
+.ride-button:hover {
+    background-color: rgb(13, 99, 152);
+}
