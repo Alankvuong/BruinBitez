@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from 'react-modal';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {UserAuth} from '../../context/AuthContext'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -15,6 +15,7 @@ function Navbar() {
     const [error, setError] = useState("");
     const [isSignUp, setIsSignUp] = useState(false);
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const navigate = useNavigate()
 
     const handleToggleMode = () => {
         setIsSignUp(!isSignUp);
@@ -24,6 +25,7 @@ function Navbar() {
       };
 
     const handleSignUp = async () => {
+        
         try {
           // Email domain regex pattern
           const emailDomainRegex = /@(ucla\.edu|g\.ucla\.edu)$/;
@@ -47,6 +49,7 @@ function Navbar() {
       
           await createUserWithEmailAndPassword(auth, email, password);
           closeModal(); // Close the modal after successful signup
+          navigate('/new-user-sign-up');
         } catch (error) {
           setError(error.message);
         }
@@ -65,6 +68,15 @@ function Navbar() {
     const handleSignIn = async () => {
         try {
             await googleSignIn();            
+        } catch(error) {
+            console.log(error);
+        }
+    };
+
+    const handleGoogleSignUp = async () => {
+        try {
+            await googleSignIn();
+            navigate('/new-user-sign-up');   
         } catch(error) {
             console.log(error);
         }
@@ -156,7 +168,7 @@ function Navbar() {
                                             Sign up to share your next ride.
                                         </div>
                                         <div className="signInButtonContainer">
-                                            <div onClick={handleSignIn} className="googleContainer">
+                                            <div onClick={handleGoogleSignUp} className="googleContainer">
                                                 <img src={require("../../assets/google-logo.png")} alt="google logo" className="googleLogo"/>
                                                 <div className="googleText">Google</div>
                                             </div>

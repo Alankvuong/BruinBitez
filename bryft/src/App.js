@@ -10,6 +10,7 @@ import Protected from './components/Navbar/ProtectedNav';
 import HomePage from "./pages/HomePage/HomePage";
 import DriverProfile from './pages/DriverProfilePage/DriverProfile';
 import UserProfile from './pages/UserProfilePage/UserProfile';
+import NewUserSignUp from './pages/SignUpInfoPage/newUserSignUp';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           {/* <Route exact path="/rides" element={<RidesPage/>} /> */}
           <Route exact path="/driver-profile" element={<DriverProfile/>} />
           <Route exact path="/user-profile" element={<Protected><UserProfile/></Protected>} />
+          <Route exact path="/new-user-sign-up" element={<NewUserSignUp/>} />
         </Routes>
       </Router>
     </AuthContextProvider>

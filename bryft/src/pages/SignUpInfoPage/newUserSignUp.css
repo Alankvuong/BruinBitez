@@ -1,0 +1,120 @@
+.progress-line {
+    height: 5px;
+    background-color: lightgray;
+    margin-bottom: 10px;
+    width: 29.4vh;
+    border-radius: 4px;
+  }
+  
+.progress-line.active1 {
+    background-color: #439EFF;
+}
+
+.progress-line.active2 {
+    background-color: #FFD600;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5.5vh;
+    margin-top: 10.5vh;
+}
+
+.infoContainer {
+    height: 40vh;
+    width: 100vh;
+    margin: auto;
+    margin-top: 5vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bryftLogo {
+    color: #111111;
+    font-size: 3.5rem;
+    text-decoration: none;
+    font-family: 'Amiko', sans-serif;
+    margin-bottom: '2%';
+    letter-spacing: 3px;
+    text-align: center;
+    margin-top: 5vh;
+}
+
+.description {
+    font-family: 'Amiko', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2vh;
+}
+
+.moreDescription {
+    font-family: 'Amiko', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 500;
+    color: gray;
+    text-align: center;
+    margin-top: 1.3vh;
+}
+
+.stepsContainer {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    gap: 5.55vh;
+}
+
+.step1 {
+    font-family: 'Amiko', sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: gray;
+
+}
+
+.step2 {
+    font-family: 'Amiko', sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: gray;
+}
+
+.step3 {
+    font-family: 'Amiko', sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: gray;
+}
+
+.step1.active {
+    color: #439EFF;
+}
+
+.step2.active4 {
+    color: #FFD600;
+}
+
+.step3.active {
+    color: #439EFF;
+}
+
+.step {
+    margin-top: 0.6vh;
+    width: 29.4vh;
+}
+
+.stepDescription {
+    font-family: 'Amiko', sans-serif;
+    font-size: 1.0rem;
+    font-weight: bold;
+    color: gray;
+    margin-top: 0vh;
+}
+
+.firstNameContainer {
+    width: 95vh;
+    height: 4vh;
+}

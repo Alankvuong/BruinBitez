@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react"
+import {UserAuth} from '../../context/AuthContext';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import "./UserProfile.css";
 
 export default function UserProfile() {
     return (
-        <div style={{backgroundColor: 'red',}}>
-            <p style={{color: 'black',}}>hi</p>
-        </div>
+        <div>hi</div>
     )
 }
-
