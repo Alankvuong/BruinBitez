@@ -10,21 +10,35 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import UserInfoPage from "../UserInfoPage/UserInfoPage";
+import Modal from "react-modal";
 
-function userProfile() {
+
+function UserProfile() {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    }; 
 
     return (
         <>
             <Navbar/>
             <div className="profile-page">
-                <div className="user-container">
-                    <img className="user-photo" src={tempPhoto} alt="driver" />
-                    <h2 className="user-name">John Doe</h2>
-                    <h4 className="user-car">Model: Honda Accord</h4>
-                    <p className="user-bio">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh mauris cursus mattis molestie. Tellus in hac habitasse platea dictumst vestibulum rhoncus. Faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. Arcu felis bibendum ut tristique et.</p>
-                    <Link to="/user-info">
-                        <button>Edit Profile</button>
-                    </Link>
+                <div className="driver-container">
+                    <img className="driver-photo" src={tempPhoto} alt="driver" />
+                    <h2 className="driver-name">John Doe</h2>
+                    <h4 className="driver-car">Model: Honda Accord</h4>
+                    <p className="driver-bio">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh mauris cursus mattis molestie. Tellus in hac habitasse platea dictumst vestibulum rhoncus. Faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. Arcu felis bibendum ut tristique et.</p>
+                    <button onClick={handleOpenModal}>Edit Profile</button>
+                    {isModalOpen && <UserInfoPage
+                        onClose={handleCloseModal} // Pass the close handler 
+                        />
+                    }
                 </div>
 
                 <div className="reviews">
@@ -34,7 +48,7 @@ function userProfile() {
                             expandIcon={<ExpandMoreIcon />}
                             className="review-title"
                         >
-                            <div className="user-rating">5.0</div>
+                            <div className="driver-rating">5.0</div>
                             <div className="review-title">
                                 Review Title
                             </div>
@@ -48,7 +62,7 @@ function userProfile() {
                             expandIcon={<ExpandMoreIcon />}
                             className="review-title"
                         >
-                            <div className="user-rating">5.0</div>
+                            <div className="driver-rating">5.0</div>
                             <div className="review-title">
                                 Review Title
                             </div>
@@ -62,7 +76,7 @@ function userProfile() {
                             expandIcon={<ExpandMoreIcon />}
                             className="review-title"
                         >
-                            <div className="user-rating">5.0</div>
+                            <div className="driver-rating">5.0</div>
                             <div className="review-title">
                                 Review Title
                             </div>
@@ -77,4 +91,4 @@ function userProfile() {
     )
 };
 
-export default userProfile;
+export default UserProfile;
