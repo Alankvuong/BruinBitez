@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, getDocs, addDoc } = require("firebase/firestore");
+const { getFirestore, collection, getDocs, addDoc, setDoc, doc } = require("firebase/firestore");
 const express = require("express");
 const cors = require("cors");
 
@@ -17,25 +17,28 @@ const firebaseConfig = {
   const firebase = initializeApp(firebaseConfig);
   // initialize firestore and get reference to service
   const db = getFirestore(firebase);
-  const usersCollection = collection(db, 'users');
-
+  
   const app = express();
   app.use(express.json());
   app.use(cors());
 
-  // API endpoint to handle user information submission
-  app.post("/api/submit-user", async (req, res) => {
+// api endpoint to handle user review submission
+  app.post("/api/add-review", async (req, res) => {
+    const userReviewsCollection = collection(db, 'user-reviews');
     try {
-        const {firstName, lastName, car, bio } = req.body;
+        const {reviewDate, reviewTitle, reviewMessage, reviewRating} = req.body;
 
-        await addDoc(usersCollection, {
-            firstName,
-            lastName,
-            car,
-            bio
+        console.log(req.body);
+        const newDocRef = doc(collection(db, 'user-reviews'));
+        
+        await setDoc(newDocRef, {
+            reviewDate,
+            reviewTitle,
+            reviewMessage,
+            reviewRating
         });
 
-        console.log("User information submitted successfuly!");
+        console.log("Review submitted succecssfully!");
         res.sendStatus(200);
     } catch (err) {
         console.error("Error submitting user information", err);
@@ -43,9 +46,22 @@ const firebaseConfig = {
     }
   });
   
-  app.listen(8000, () => {
-    console.log('Backend server is running on http://localhost:8000');
+  app.get("/api/get-reviews", async (req, res) => {
+    try {
+        const reviewsQuery = await getDocs(collection(db, 'user-reviews'));
+
+        const documents = [];
+        reviewsQuery.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+        });
+
+        res.json(documents);
+    } catch (error) {
+        console.log("Error getting documents", error);
+        res.status(500).json({ error: "Failed to retrieve documents" });
+    }
   })
 
-//   createNewUser();
-  
+  app.listen(8000, () => {
+    console.log('Backend server is running on http://localhost:8000');
+  })  
