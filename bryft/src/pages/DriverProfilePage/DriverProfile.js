@@ -37,7 +37,7 @@ function DriverProfile() {
     return (
         <>
             <Navbar/>
-            <div className="profile-page">
+            <div className="driver-profile-page">
                 <div className="driver-container">
                     <img className="driver-photo" src={tempPhoto} alt="driver" />
                     <h2 className="driver-name">John Doe</h2>
