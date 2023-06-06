@@ -27,7 +27,27 @@ function DriverProfile() {
     const getReviews = async() => {
         try {
             const response = await axios.get("http://localhost:8000/api/get-reviews");
-            setReviews(response.data);
+            const reviews = response.data;
+
+            // Sort the reviews by date and time in descending order
+            const sortedReviews = reviews.sort((a, b) => {
+                const dateA = a.data.reviewDate;
+                const timeA = a.data.reviewTime;
+                const dateB = b.data.reviewDate;
+                const timeB = b.data.reviewTime;
+            
+                const dateTimeA = new Date(`${dateA} ${timeA}`);
+                const dateTimeB = new Date(`${dateB} ${timeB}`);
+            
+                return dateTimeA - dateTimeB;
+            });
+
+            // Reverse the sorted array to display the reviews in descending order
+            const descendingReviews = sortedReviews.reverse();
+            
+            console.log(descendingReviews);
+            setReviews(descendingReviews);
+            // setReviews(response.data);
             
         } catch (error) {
             console.error("Error getting reviews: ", error);
@@ -60,6 +80,18 @@ function DriverProfile() {
                                 <div className="driver-rating">{reviews.data.reviewRating.toFixed(1)}</div>
                                 <div className="review-title">
                                     {reviews.data.reviewTitle}
+                                </div>
+                                <div className="date-time">
+                                    <div className="review-date">
+                                        {reviews.data.reviewDate}
+                                    </div>
+                                    <div className="date-time-separator">
+                                        |
+                                    </div>
+                                    <div className="review-time">
+                                        {reviews.data.reviewTime && `${reviews.data.reviewTime.split(':')[0]}:${reviews.data.reviewTime.split(':')[1].padStart(2, '0')} ${Number(reviews.data.reviewTime.split(':')[0]) < 12 ? 'am' : 'pm'}`}
+                                    </div>
+
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails className="review-expanded">

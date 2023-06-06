@@ -58,6 +58,28 @@
 .review-title {
     text-align: center;
     padding-top: 10px;
+    font-weight: 800;
+    font-size: 18px;
+    color: #439EFF;
+    padding-left: 16px;
+}
+
+.review-date {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 5px;
+}
+
+.review-time {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 4px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 10px;
 }
 
 .driver-rating {
@@ -84,4 +106,17 @@
     justify-content: flex-end;
     margin-right: 10%;
     margin-bottom: 10px;
+}
+
+.date-time {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2px;
+}
+
+.date-time-separator {
+    color: #7B7B7B;
+    margin-top: 6px;
+    font-weight: 600;
+
 }

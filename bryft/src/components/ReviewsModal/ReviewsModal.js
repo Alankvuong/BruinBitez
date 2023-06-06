@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import "./ReviewModal.css";
 
 function ReviewModal({ isOpen: isOpenProp, onClose }) {
@@ -17,6 +19,12 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
     const handleClose = () => {
         setIsOpen(false);
         onClose(); // Call the onClose function provided by the parent component
+        window.location.reload(false);
+    }
+
+    const handleCloseNoRefresh = () => {
+        setIsOpen(false);
+        onClose();
     }
 
     const handleSubmit = async() => {
@@ -25,8 +33,18 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
         let currentMonth = String(currentDate.getMonth()+1).padStart(2, "0");
         let currentYear = currentDate.getFullYear();
 
+        const hours = currentDate.getHours(); // 0-23
+        const minutes = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes(); // 0-59
+        const seconds = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds(); ; // 0-59
+
         // display the date as MM/DD/YYYY
         const reviewDate = `${currentMonth}/${currentDay}/${currentYear}`;
+
+        // minutes.replace(minutes, minutes.toString().padStart(2, '0'));
+        const reviewTime = `${hours}:${minutes}:${seconds}`
+
+        console.log(reviewTime);
+        // console.log(`Current time: ${hours}:${minutes}:${seconds}`);
 
         const decimalRating = Number(reviewRating.toFixed(1));          // converts review display to decimal format
         
@@ -34,6 +52,7 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
             // sends the necessary review data to firebase through backend api
             const response = await axios.post("http://localhost:8000/api/add-review", {
                 reviewDate,
+                reviewTime,
                 reviewTitle,
                 reviewMessage,
                 reviewRating: decimalRating
@@ -55,6 +74,9 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
             <Modal open={isOpen} onClose={handleClose}>
                 <div className="modal">
                     <div className="modal-content">
+                        <IconButton className="close-icon" edge="end" color="inherit" onClick={handleCloseNoRefresh}>
+                            <CloseIcon />
+                        </IconButton>
                         <Typography variant="h4" component="h4" color="#439EFF">
                             Add a review
                         </Typography>
