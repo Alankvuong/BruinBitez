@@ -2,7 +2,7 @@ import "./UserProfile.css";
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 // import tempPhoto from "../DriverProfilePage/alan_temp_photo.jpg"
-import tempPhoto from "../DriverProfilePage/blank-profile-image.webp";
+import tempPhoto from "./blank-profile-image.webp";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';

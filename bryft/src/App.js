@@ -25,7 +25,7 @@ function App() {
           {/* <Route exact path="/rides" element={<RidesPage/>} /> */}
           <Route exact path="/driver-profile" element={<DriverProfile/>} />
           <Route exact path="/user-profile" element={<UserProfile/>} />
-          <Route exact path="/user-info" element={<UserInfoPage/>} />
+          <Route exact path="/user-profile" element={<Protected><UserProfile/></Protected>} />
           <Route exact path="/new-user-sign-up" element={<NewUserSignUp/>} />
         </Routes>
       </Router>
