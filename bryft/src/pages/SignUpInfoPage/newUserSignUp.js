@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import ImagePicker from 'react-image-picker-v2'
 import {UserAuth} from '../../context/AuthContext';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -300,6 +299,15 @@ export default function NewUserSignUp() {
             </div>
             <div className="stepsContainer">
                 <div className="step">
+                    <div className={`step1 ${step >= 1 ? "active5" : ""}`}>Basic Information</div>
+                </div>
+                <div className="step">
+                    <div className={`step2 ${step >= 2 ? "active5" : ""}`}>School & Car</div>
+                </div>
+                <div className="step">
+                    <div className={`step3 ${step >= 3 ? "active5" : ""}`}>Personalization</div>
+                </div>
+                {/* <div className="step">
                     <div className="stepDescription">Basic Information</div>
                 </div>
                 <div className="step">
@@ -307,7 +315,7 @@ export default function NewUserSignUp() {
                 </div>
                 <div className="step">
                     <div className="stepDescription">Personalization</div>
-                </div>
+                </div> */}
             </div>
             <div>
                 {renderCurrentStep()}
