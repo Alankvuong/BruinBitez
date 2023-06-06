@@ -15,7 +15,7 @@ function UserInfoPage() {
     return (
         <div>
             <Navbar />
-            <h1 className="title">thanks, now tell us more about yourself!</h1>
+            <h1 className="title">time to make some changes...</h1>
             <div className="mainform">
                 <form>
                     <label>car model</label>
