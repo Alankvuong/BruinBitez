@@ -13,63 +13,63 @@ const AuthContext = createContext();
 const url = 'http://localhost:3000'
 
 export const AuthContextProvider = ({ children }) => {
-    const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
 
-    const getGoogleaccount = async (googleEmail) => {
-        try {
-          // googleEmail is sent as a route parameter
-          const account = await axios.get(`${url}/getGoogleaccount/${googleEmail}`);
-          return account;
-        } catch (error) {
-          console.error(error.message);
-          console.error('could not get google account');
-        }
-        return null;
-      };
+  const getGoogleaccount = async (googleEmail) => {
+    try {
+      // googleEmail is sent as a route parameter
+      const account = await axios.get(`${url}/getGoogleaccount/${googleEmail}`);
+      return account;
+    } catch (error) {
+      console.error(error.message);
+      console.error('could not get google account');
+    }
+    return null;
+  };
 
-    const googleSignIn = () => {
-        const provider = new GoogleAuthProvider();
-        // signInWithPopup(auth, provider);
-        signInWithRedirect(auth, provider)
-        .then(async (result) => {
-            // The signed-in user info.
-            const { user: googleUser } = result;
-    
-            const account = await getGoogleaccount(googleUser.email);
-            setUser(account.data);
-          }).catch((e) => {
-          // Handle Errors here.
-            const errorCode = e.code;
-            console.error(errorCode);
-    
-            const googleErrorMessage = e.message;
-            console.error(googleErrorMessage);
-          });
-      };
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    // signInWithPopup(auth, provider);
+    signInWithRedirect(auth, provider)
+      .then(async (result) => {
+        // The signed-in user info.
+        const { user: googleUser } = result;
 
-    
-    useEffect(() => {
+        const account = await getGoogleaccount(googleUser.email);
+        setUser(account.data);
+      }).catch((e) => {
+        // Handle Errors here.
+        const errorCode = e.code;
+        console.error(errorCode);
+
+        const googleErrorMessage = e.message;
+        console.error(googleErrorMessage);
+      });
+  };
+
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        console.log('User', currentUser)
+      setUser(currentUser);
+      console.log('User', currentUser)
     });
     return () => {
-        unsubscribe();
+      unsubscribe();
     };
-    }, []);
+  }, []);
 
-    const logOut = () => {
-        signOut(auth)
-    }
+  const logOut = () => {
+    signOut(auth)
+  }
 
 
-    return (
-        <AuthContext.Provider value={{googleSignIn, logOut, user}}>
-          {children}
-        </AuthContext.Provider>
-      );
+  return (
+    <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export const UserAuth = () => {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
