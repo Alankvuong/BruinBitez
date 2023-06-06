@@ -18,7 +18,7 @@ function AboutPage() {
         <div>
         <Navbar />
         <div className="maindiv">
-                <h1 className="title">about us</h1>
+                <h1 className="titlea">about us</h1>
                 <div className="headshot-container">
                     <img src={alan} className="headshot" alt="Alan's headshot" />
                     <div className="spacer"></div>
@@ -36,7 +36,7 @@ function AboutPage() {
                 <br/>
                 <br/>
                 At Bryft, we strive to create a community where students can easily connect with fellow classmates, find affordable rides, and forge meaningful connections along the way. Join Bryft today and revolutionize the way you travel to and from campus. Together, let's navigate the roads of education, connection, and opportunity.</p>
-                <h2 className="subtitle">
+                <h2 className="subtitlea">
                     connect with us
                 </h2>
                 <div className="icons">

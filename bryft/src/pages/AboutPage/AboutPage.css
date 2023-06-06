@@ -10,16 +10,16 @@
     float:left;
 }
 
-.title {
+.titlea {
     font-family: 'Amiko', sans-serif;
     font-size: 30px;
     font-weight: bold;
     padding-top: 15px;
-    text-align: center !important;
+    text-align: center;
     color: #438EFF;
 }
 
-.subtitle {
+.subtitlea {
     font-family: 'Amiko', sans-serif;
     font-size: 25px;
     font-weight: bold;
