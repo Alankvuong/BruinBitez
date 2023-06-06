@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import DriverProfile from './pages/DriverProfilePage/DriverProfile';
 import UserProfile from './pages/UserProfilePage/UserProfile';
 import UserInfoPage from './pages/UserInfoPage/UserInfoPage';
+import NewUserSignUp from './pages/SignUpInfoPage/newUserSignUp';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/driver-profile" element={<DriverProfile/>} />
           <Route exact path="/user-profile" element={<UserProfile/>} />
           <Route exact path="/user-info" element={<UserInfoPage/>} />
+          <Route exact path="/new-user-sign-up" element={<NewUserSignUp/>} />
         </Routes>
       </Router>
     </AuthContextProvider>

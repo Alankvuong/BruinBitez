@@ -65,9 +65,31 @@
     margin: 0;
 }
 
+.logoutButton {
+    font-family: 'Amiko', sans-serif;
+    border-radius: 22px;
+    border-width: 1px;
+    border-color: #439EFF;
+    border: solid;
+    background-color: white;
+    color: #439EFF;
+    font-weight: bold;
+    padding: 5px 24px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
 .loginButton:hover {
     background-color: #388ae1;
     transition:ease-out;
+}
+
+.logoutButton:hover {
+    background-color: #439EFF;
+    border-color: white;
+    color: white;
+    transition:
 }
 
 .popupLogo {
