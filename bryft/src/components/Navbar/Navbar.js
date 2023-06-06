@@ -123,7 +123,7 @@ function Navbar() {
                     </li>
                     <li>
                         {user ? (
-                            <button onClick={handleSignOut} className="loginButton">Logout</button>
+                            <button onClick={handleSignOut} className="logoutButton">Logout</button>
                         ) : ( 
                         <div>
                             <button onClick={openModal} className="loginButton">Login</button>
