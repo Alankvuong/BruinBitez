@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+.ride-card {
+    position: relative;
+    width: auto;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.ride-card-content {
+    width: 100%;
+    height: 100%;
+}
+
+.grid-container {
+    height: auto;
+}
+
+.top-left {
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 50%;
+    height: 50%;
+    font-family: 'Amiko', sans-serif;
+    top: 0;
+    left: 0;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.top-right {
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 50%;
+    height: 50%;
+    font-family: 'Amiko', sans-serif;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.bottom-left {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width: 50%;
+    height: 50%;
+    font-family: 'Amiko', sans-serif;
+    bottom: 0;
+    left: 0;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.bottom-right {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 50%;
+    height: 50%;
+    font-family: 'Amiko', sans-serif;
+    bottom: 0;
+    right: 0;
+    font-size: 15px;
+    padding: 10px;
+}

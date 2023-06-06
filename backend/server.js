@@ -25,9 +25,23 @@ app.post('/api/create-ride', async (req, res) => {
     try {
         console.log(req.body);
         const rideDocRef = await addDoc(collection(db, "rides"), req.body);
-        console.log("Review submitted succecssfully!");
+        console.log("Review submitted successfully!");
         res.sendStatus(200);
-    } catch(err) {
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
+})
+
+//api endpoint to fetch existing ride posts
+app.get('/api/get-rides', async (req, res) => {
+    try {
+        const collectionRef = collection(db, 'rides');
+        const querySnapshot = await getDocs(collectionRef);
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+        
+        res.json(documents);
+    } catch (err) {
         console.error("Error submitting user information", err);
         res.sendStatus(500);
     }
