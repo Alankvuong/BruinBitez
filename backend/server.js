@@ -26,13 +26,14 @@ const firebaseConfig = {
   app.post("/api/add-review", async (req, res) => {
     const userReviewsCollection = collection(db, 'user-reviews');
     try {
-        const {reviewDate, reviewTitle, reviewMessage, reviewRating} = req.body;
+        const {reviewDate, reviewTime, reviewTitle, reviewMessage, reviewRating} = req.body;
 
         console.log(req.body);
         const newDocRef = doc(collection(db, 'user-reviews'));
         
         await setDoc(newDocRef, {
             reviewDate,
+            reviewTime,
             reviewTitle,
             reviewMessage,
             reviewRating
@@ -60,7 +61,23 @@ const firebaseConfig = {
         console.log("Error getting documents", error);
         res.status(500).json({ error: "Failed to retrieve documents" });
     }
-  })
+  });
+
+//   app.get("/api/driver-information", async(req, res) => {
+//     try {
+//         const driverQuery = await getDocs(collection(db, 'users'));
+
+//         const documents = [];
+//         driverQuery.forEach((doc) => {
+//             documents.push({})
+//         });
+
+//         res.json(documents);
+//     } catch (error) {
+//         console.log("Error getting documents", error);
+//         res.status(500).json({error: "Failed to retrieve documents"});
+//     }
+//     });
 
   app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');
