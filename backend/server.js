@@ -1,7 +1,9 @@
-const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, getDocs, addDoc, setDoc, doc, updateDoc, query, where } = require("firebase/firestore");
-const express = require("express");
-const cors = require("cors");
+const { initializeApp } = require('firebase/app');
+const { getFirestore, collection, getDocs, addDoc, setDoc, doc, updateDoc, query, where } = require('firebase/firestore');
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage');
 
 const firebaseConfig = {
     apiKey: "AIzaSyA7N3HNdokIkp8uHhbGilzdZcSqNc7KGSo",
@@ -18,6 +20,12 @@ const db = getFirestore(firebase);
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Get the Firebase Storage instance
+const firebaseStorage = getStorage(firebase);
+// Set up multer middleware to handle file uploads
+const uploadStorage = multer({ firebaseStorage }); // Use Firebase Storage as the destination storage
+
 
 //api endpoint to get user's name
 app.get('/api/get-name', async (req, res) => {
@@ -98,6 +106,72 @@ app.post("/api/add-review", async (req, res) => {
         res.sendStatus(500);
     }
   });
+
+async function getDocumentIdFromUid(uid) {
+    const usersCollectionRef = collection(db, "users");
+    const q = query(usersCollectionRef, where("uid", "==", uid));
+  
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const documentId = querySnapshot.docs[0].id;
+      return documentId;
+    } else {
+      return null; // No document found with the given UID
+    }
+  }
+
+// POST route for updating user profile
+app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, res) => {
+    try {
+    const { car, bio, userUID } = req.body;
+    const selectedImage = req.file; // Access the uploaded file using req.file
+
+    // Your existing code to get the document ID from the user UID
+    const uid = userUID;
+    getDocumentIdFromUid(uid)
+        .then(async (documentId) => {
+        if (documentId) {
+            console.log('Document ID:', documentId);
+            const userDocRef = doc(db, 'users', documentId);
+
+            if(selectedImage === null){
+                // Upload the file to Firebase Storage
+                const storageRef = ref(firebaseStorage, `images/${userUID}/${selectedImage.originalname}`);
+                await uploadBytes(storageRef, selectedImage.buffer);
+    
+                // Get the download URL of the uploaded file
+                const downloadURL = await getDownloadURL(storageRef);
+
+                // Update the user document in Firestore with the download URL
+                await updateDoc(userDocRef, {
+                car,
+                bio,
+                selectedImage: downloadURL,
+                });
+            } else {
+                // Update the user document in Firestore with the download URL
+                await updateDoc(userDocRef, {
+                    car,
+                    bio,
+                    });
+            }
+
+
+            console.log('User profile updated successfully!');
+            res.sendStatus(200);
+        } else {
+            console.log('Document not found for UID:', uid);
+        }
+        })
+        .catch((error) => {
+        console.error('Error retrieving document ID:', error);
+        res.sendStatus(500);
+        });
+    } catch (err) {
+    console.error('Error submitting user information', err);
+    res.sendStatus(500);
+    }
+});
   
     app.get("/api/get-reviews", async (req, res) => {
         try {
@@ -128,7 +202,6 @@ app.post("/api/add-review", async (req, res) => {
         try {
             const uid = req.query.uid;
 
-            console.log("Here 1");
             userInfoQuery = await getDocs(query(collection(db, 'users'), where('uid', '==', uid)));
             const documents = [];
             userInfoQuery.forEach((doc) => {

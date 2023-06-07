@@ -14,6 +14,7 @@ import DriverProfile from './pages/DriverProfilePage/DriverProfile';
 import UserProfile from './pages/UserProfilePage/UserProfile';
 import UserInfoPage from './pages/UserInfoPage/UserInfoPage';
 import NewUserSignUp from './pages/SignUpInfoPage/newUserSignUp';
+import RiderProfile from './pages/RiderProfile/RiderProfile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/* <Route exact path="/login" element={<LoginPage/>} /> */}
           <Route exact path="/rides" element={<RidesPage/>} />
           <Route exact path="/driver-profile" element={<DriverProfile/>} />
+          <Route exact path="rider-profile" element={<RiderProfile/>} />
           <Route exact path="/user-profile" element={<UserProfile/>} />
           <Route exact path="/user-profile" element={<Protected><UserProfile/></Protected>} />
           <Route exact path="/new-user-sign-up" element={<NewUserSignUp/>} />
