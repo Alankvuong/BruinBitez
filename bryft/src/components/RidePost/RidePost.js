@@ -102,9 +102,11 @@ export default function RidePost({ origin, destination, driver, price, departure
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver || spots <= 0}>
-                        {!joinedRide ? <span>Join Ride</span> : <span>Leave Ride</span>}
-                    </Button>
+                    {!joinedRide ? <Button onClick={handleSubmit} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver || spots <= 0}>
+                       Join Ride
+                    </Button> : <Button onClick={handleSubmit} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver}>
+                       Leave Ride
+                    </Button>}
                 </DialogActions>
             </Dialog>
         </div>

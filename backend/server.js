@@ -25,7 +25,6 @@ app.get('/api/get-name', async (req, res) => {
         let name = '';
         const querySnapshot = await getDocs(query(collection(db, 'users'), where('uid', '==', req.query.uid)));
         querySnapshot.forEach((doc) => { name = doc.data().firstName + ' ' + doc.data().lastName; });
-        console.log(name);
         res.json({ name: name });
     } catch (err) {
         console.error("Error submitting user information", err);
@@ -41,7 +40,6 @@ app.post('/api/create-ride', async (req, res) => {
             docId: rideDocRef.id
         });
         console.log("Ride created successfully!");
-        console.log(rideDocRef.id);
         res.sendStatus(200);
     } catch (err) {
         console.error("Error submitting user information", err);
