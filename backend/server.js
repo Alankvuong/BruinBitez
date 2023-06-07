@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, getDocs, addDoc, setDoc, doc } = require("firebase/firestore");
+const { getFirestore, collection, getDocs, addDoc, setDoc, doc, updateDoc, query, where } = require("firebase/firestore");
 const express = require("express");
 const cors = require("cors");
 
@@ -19,13 +19,29 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//api endpoint to get user's name
+app.get('/api/get-name', async (req, res) => {
+    try {
+        let name = '';
+        const querySnapshot = await getDocs(query(collection(db, 'users'), where('uid', '==', req.query.uid)));
+        querySnapshot.forEach((doc) => { name = doc.data().firstName + ' ' + doc.data().lastName; });
+        console.log(name);
+        res.json({ name: name });
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
+})
 
 //api endpoint to create ride post
 app.post('/api/create-ride', async (req, res) => {
     try {
-        console.log(req.body);
         const rideDocRef = await addDoc(collection(db, "rides"), req.body);
-        console.log("Review submitted successfully!");
+        await updateDoc(rideDocRef, {
+            docId: rideDocRef.id
+        });
+        console.log("Ride created successfully!");
+        console.log(rideDocRef.id);
         res.sendStatus(200);
     } catch (err) {
         console.error("Error submitting user information", err);
@@ -46,6 +62,17 @@ app.get('/api/get-rides', async (req, res) => {
         res.sendStatus(500);
     }
 })
+
+//api endpoint to change number of available spots in the ride
+app.post("/api/change-spots", async (req, res) => {
+    try {
+        const rideDocRef = doc(collection(db, 'rides'), req.body.docId );
+        await updateDoc(rideDocRef, { numSpots: req.body.numSpots });
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+  });
 
 // api endpoint to handle user review submission
 app.post("/api/add-review", async (req, res) => {
@@ -85,7 +112,7 @@ app.post("/api/add-review", async (req, res) => {
         console.log("Error getting documents", error);
         res.status(500).json({ error: "Failed to retrieve documents" });
     }
-  })
+  });
 
 app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');

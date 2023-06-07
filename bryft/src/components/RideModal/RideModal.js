@@ -13,17 +13,29 @@ export default function RideModal() {
     driver: '',
     departureTime: '',
     price: '',
-    uid: ''
+    uid: '',
+    numSpots: 0
   });
 
   //tracks if user is logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    let name = '';
     onAuthStateChanged(auth, (currentUser) => {
+      console.log("current user", currentUser);
       setIsLoggedIn(!!currentUser);
-      if (currentUser.uid) {
-        setRideData({ ...rideData, driver: currentUser.displayName, uid: currentUser.uid });
+      if (currentUser?.uid) {
+        axios.get('http://localhost:8000/api/get-name', { params: {uid: currentUser.uid} })
+          .then((response) => {
+            name = response.data.name;
+            setRideData({ ...rideData, driver: name, uid: currentUser.uid });
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+
+        setRideData({ ...rideData, driver: name, uid: currentUser.uid });
       } else {
         console.log("currentUser is null");
       }
@@ -45,7 +57,6 @@ export default function RideModal() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(rideData);
-    console.log("form submitted");
     axios.post('http://localhost:8000/api/create-ride', rideData)
       .then((response) => {
         console.log('Response:', response.data);
@@ -64,7 +75,7 @@ export default function RideModal() {
         Create Ride Post
       </Button>
       <Dialog open={open} onClose={handleClose}>
-      {!isLoggedIn && <div className="error-message">You need to be logged in to create a ride post!</div>}
+        {!isLoggedIn && <div className="error-message">You need to be logged in to create a ride post!</div>}
         <DialogTitle>Ride Details</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
@@ -72,6 +83,7 @@ export default function RideModal() {
             <TextField label="Where will you be heading?" name="destination" value={rideData.destination} onChange={handleChange} margin="normal" fullWidth />
             <TextField label="Price" name="price" value={rideData.price} onChange={handleChange} margin="normal" />
             <TextField label="Departure Time" name="departureTime" value={rideData.departureTime} onChange={handleChange} margin="normal" fullWidth />
+            <TextField label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" />
           </form>
         </DialogContent>
         <DialogActions>
