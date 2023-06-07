@@ -74,7 +74,6 @@ function DriverProfile() {
         try {            
             const response = await axios.get(`http://localhost:8000/api/get-user-profile?uid=${uid}`);
             const userInfo = response.data;
-            console.log("User Info:", userInfo);
             setUserInfo(userInfo);
         } catch (err) {
             console.error("Error fetching user information.", err)
