@@ -14,7 +14,7 @@ export default function RidesPage() {
         axios.get('http://localhost:8000/api/get-rides')
             .then((response) => {
                 setFetchedRides(response.data);
-                console.log(response.data);
+                console.log("fetched rides", response.data);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -33,14 +33,16 @@ export default function RidesPage() {
                 </Box>
                 <Container>
                     {fetchedRides.map((item, index) => (
-                        <RidePost key={index}
-                            origin={item.origin}
-                            destination={item.destination}
-                            driver={item.driver}
-                            departureTime={item.departureTime}
-                            price={item.price}
-                            uid={item.uid}
-                        />
+                            <RidePost key={index}
+                                origin={item.origin}
+                                destination={item.destination}
+                                driver={item.driver}
+                                departureTime={item.departureTime}
+                                price={item.price}
+                                uid={item.uid}
+                                numSpots={item.numSpots}
+                                docId={item.docId}
+                            />
                     ))}
                 </Container>
             </Box>
