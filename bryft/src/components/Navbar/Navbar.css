@@ -94,30 +94,30 @@
 
 .popupLogo {
     color: #111111;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     text-decoration: none;
     font-family: 'Amiko', sans-serif;
     margin-bottom: '2%';
     letter-spacing: 3px;
     text-align: center;
-    margin-top: 7.5%;
+    margin-top: 5.5%;
 }
 .exButton {
     position: absolute;
-    height: 4.5%;
-    width: 6%;
-    top: 3.7%;
+    height: 4%;
+    width: 5%;
+    top: 3%;
     left: 90%;
 }
 
 .welcomeMessage {
     color: #111111;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-decoration: none;
     font-family: 'Amiko', sans-serif;
     text-align: center;
     font-weight: bold;
-    margin-top: 3%;
+    margin-top: 2%;
 }
 
 .descriptionMessage {
@@ -190,7 +190,7 @@
 }
 
 .emailSignUpInput {
-    height: 5vh;
+    height: 4vh;
     width: 100%;
     border-radius: 6px;
     align-items: center;
@@ -201,6 +201,7 @@
     color: black;
     font-weight: 400;
     font-size: 0.9em;
+    background-color: white;
 }
 
 .passwordText {
@@ -212,7 +213,7 @@
 }
 
 .passwordSignUpInput {
-    height: 5vh;
+    height: 4vh;
     width: 100%;
     border-radius: 6px;
     align-items: center;
@@ -223,6 +224,8 @@
     color: black;
     font-weight: 400;
     font-size: 0.9em;
+    background-color: white;
+    margin-bottom: 0;
 }
 
 .checkbox {
@@ -237,6 +240,8 @@
     transition: background-color 0.2s;
     margin-left: -0.25%;
     cursor: pointer;
+    background-color: white;
+    margin-right: 0.8vh;
 }
 
 .checkbox:checked {
@@ -247,7 +252,7 @@
 .checkbox::after {
   content: '\2713';
   position: relative;
-  top: -16%;
+  top: -10%;
   left: 7%;
   transform: translate(-50%, -50%);
   color: white;
@@ -286,7 +291,9 @@
     border: None;
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 6%;
+    margin-top: 4%;
+    margin-left: -0.1%;
+    margin-bottom: 0%;
 }
 
 .signInButton:hover {

@@ -140,13 +140,13 @@ function Navbar() {
                                         },
                                         content: {
                                             width: '30%',
-                                            height: '80%',
+                                            height: '84%',
                                             borderRadius: 34,
                                             boxShadow: 'rgba(0, 0, 0, 0.45) 0px 2px 10px',
                                             position: 'absolute',
                                             top: '9.5%',
                                             left: '34%',
-                                            marginTop: '-1%',
+                                            marginTop: '-2%',
                                         }
                                     }}
                                     contentLabel="Login Modal"
@@ -261,14 +261,14 @@ function Navbar() {
                                             </div>
                                             {"error" && <div className="error">{error}</div>}
                                             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '3.5%'}}>
-                                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: '-2%',}}>
                                                     <input 
                                                         type="checkbox"
                                                         className="checkbox"
                                                     />
                                                     <div className="rememberText">Remember for 30 days</div>
                                                 </div>
-                                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                                                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: '-2%'}}>
                                                     <div className="forgotPasswordText">Forgot Password</div>
                                                 </div>
                                             </div>
