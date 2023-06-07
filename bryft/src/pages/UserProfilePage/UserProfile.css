@@ -5,13 +5,13 @@
     flex: 1;
 }
 
-.driver-container {
+.user-container {
     max-width: 300px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
 
-.driver-photo {
+.user-photo {
     position: relative;
     padding-top: 5%;
     padding-left: 5%;
@@ -20,7 +20,7 @@
     width: auto;
 }
 
-.driver-name {
+.user-name {
     position: relative;
     padding-left: 5.5%;
     margin-top: 5px;
@@ -28,7 +28,7 @@
     font-size: 2em;
 }
 
-.driver-car {
+.user-car {
     position: relative;
     padding-left: 5.5%;
     margin-top: 5px;
@@ -36,10 +36,10 @@
     margin-bottom: -10px;
 }
 
-.driver-bio {
+.user-bio {
     position: relative;
     padding-left: 5.5%;
-    max-width: 250px;
+    max-width: 300px;
 }
 
 .reviews {
@@ -58,7 +58,7 @@
     padding-top: 10px;
 }
 
-.driver-rating {
+.user-rating {
     background-color:#439EFF;
     color: white;
     font-weight: 400;

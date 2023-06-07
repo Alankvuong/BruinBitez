@@ -39,7 +39,7 @@
 .driver-bio {
     position: relative;
     padding-left: 5.5%;
-    max-width: 250px;
+    width: 300px;
 }
 
 .reviews {

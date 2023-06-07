@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import "./ReviewModal.css";
+import { getAuth } from "firebase/auth";
 
 function ReviewModal({ isOpen: isOpenProp, onClose }) {
     const [isOpen, setIsOpen] = useState(isOpenProp);
@@ -48,17 +49,37 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
 
         const decimalRating = Number(reviewRating.toFixed(1));          // converts review display to decimal format
         
+        const urlParams = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        const driverUID = urlParams.uid;
+        console.log("Driver UID: ", driverUID);
+
         try {
-            // sends the necessary review data to firebase through backend api
-            const response = await axios.post("http://localhost:8000/api/add-review", {
-                reviewDate,
-                reviewTime,
-                reviewTitle,
-                reviewMessage,
-                reviewRating: decimalRating
-            });
-            
-            setShowThankYouModal(true);
+            const auth = getAuth(); // Get the Firebase Auth instance
+            const user = auth.currentUser; // Get the current user object
+        
+            if (user) {
+              const riderUID = user.uid; // Get the UID of the current user
+
+                try {
+                    // sends the necessary review data to firebase through backend api
+                    const response = await axios.post("http://localhost:8000/api/add-review", {
+                        reviewDate,
+                        reviewTime,
+                        reviewTitle,
+                        reviewMessage,
+                        reviewRating: decimalRating,
+                        riderUID,
+                        driverUID
+                    });
+                    
+                    setShowThankYouModal(true);
+                } catch(err) {
+                    console.error(err);
+                }
+            }
         } catch(err) {
             console.error(err);
         }
