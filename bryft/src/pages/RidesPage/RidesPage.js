@@ -3,7 +3,7 @@ import '@fontsource/amiko';
 import './RidesPage.css'
 import { Typography, Box, Container } from "@mui/material";
 import React, { useState, useEffect } from 'react';
-import RideModal from "../../components/RideEditor/RideModal";
+import RideModal from "../../components/RideModal/RideModal";
 import RidePost from "../../components/RidePost/RidePost";
 import axios from "axios";
 
@@ -39,6 +39,7 @@ export default function RidesPage() {
                             driver={item.driver}
                             departureTime={item.departureTime}
                             price={item.price}
+                            uid={item.uid}
                         />
                     ))}
                 </Container>

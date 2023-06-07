@@ -63,3 +63,12 @@
     font-size: 15px;
     padding: 10px;
 }
+
+.driver-link {
+    color:black;
+}
+
+.driver-link:hover {
+    color:blue;
+    text-decoration: underline;
+}
