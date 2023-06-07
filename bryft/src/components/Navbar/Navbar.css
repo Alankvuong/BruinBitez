@@ -252,8 +252,8 @@
 .checkbox::after {
   content: '\2713';
   position: relative;
-  top: -10%;
-  left: 7%;
+  top: -1.2vh;
+  left: -0.8vh;
   transform: translate(-50%, -50%);
   color: white;
   font-size: 15px;
