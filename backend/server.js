@@ -11,19 +11,44 @@ const firebaseConfig = {
     messagingSenderId: "16895573382",
     appId: "1:16895573382:web:c426996e8f867f49a78007",
     measurementId: "G-XK6V3NESWR"
-  };
-  
-  // Initialize Firebase
-  const firebase = initializeApp(firebaseConfig);
-  // initialize firestore and get reference to service
-  const db = getFirestore(firebase);
-  
-  const app = express();
-  app.use(express.json());
-  app.use(cors());
+};
+
+const firebase = initializeApp(firebaseConfig);
+const db = getFirestore(firebase);
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+
+//api endpoint to create ride post
+app.post('/api/create-ride', async (req, res) => {
+    try {
+        console.log(req.body);
+        const rideDocRef = await addDoc(collection(db, "rides"), req.body);
+        console.log("Review submitted successfully!");
+        res.sendStatus(200);
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
+})
+
+//api endpoint to fetch existing ride posts
+app.get('/api/get-rides', async (req, res) => {
+    try {
+        const collectionRef = collection(db, 'rides');
+        const querySnapshot = await getDocs(collectionRef);
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+        
+        res.json(documents);
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
+})
 
 // api endpoint to handle user review submission
-  app.post("/api/add-review", async (req, res) => {
+app.post("/api/add-review", async (req, res) => {
     const userReviewsCollection = collection(db, 'user-reviews');
     try {
         const {reviewDate, reviewTime, reviewTitle, reviewMessage, reviewRating} = req.body;
@@ -79,6 +104,6 @@ const firebaseConfig = {
 //     }
 //     });
 
-  app.listen(8000, () => {
+app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');
-  })  
+});
