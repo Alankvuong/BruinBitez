@@ -22,7 +22,7 @@ const images = [
 export default function NewUserSignUp() {
     const [step, setStep] = useState(1);
     const {user} = UserAuth();
-    const email = user.email;
+    const email = user?.email;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [bio, setBio] = useState("");
