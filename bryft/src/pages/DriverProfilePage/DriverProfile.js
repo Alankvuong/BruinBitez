@@ -127,7 +127,7 @@ function DriverProfile() {
                         ))
                     ) : (
                         <Box mt={2}>
-                        <Alert severity="info">No reviews available. Please check back later.</Alert>
+                            <Alert severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                         </Box>
                     )}
                 </div>
