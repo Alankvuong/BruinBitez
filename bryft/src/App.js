@@ -31,9 +31,6 @@ function App() {
         </Routes>
       </Router>
     </AuthContextProvider>
-  // <div>
-  //     hi
-  // </div>
   );
 }
 

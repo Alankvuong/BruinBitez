@@ -4,6 +4,7 @@ import {UserAuth} from '../../context/AuthContext';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import "./newUserSignUp.css";
+import { getAuth } from "firebase/auth";
 
 import happyBruin from '../../assets/happyBruin.png';
 import bruinHead from '../../assets/bruin-head.png'
@@ -70,32 +71,41 @@ export default function NewUserSignUp() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-        const userData = {
-            firstName,
-            lastName,
-            bio,
-            car,
-            school,
-            email,
-            selectedImage,
-        };
+        const auth = getAuth(); // Get the Firebase Auth instance
+        const user = auth.currentUser; // Get the current user object
 
-        // Save the user data to the Firestore database
-        const userDocRef = await addDoc(collection(db, "users"), userData);
-        console.log("User document written with ID: ", userDocRef.id);
+        if (user) {
+            const uid = user.uid; // Get the UID of the current user
+            try {
+            const userData = {
+                firstName,
+                lastName,
+                uid,
+                bio,
+                car,
+                school,
+                email,
+                selectedImage,
+            };
 
-        // Clear the input fields
-        setFirstName("");
-        setLastName("");
-        setBio("");
-        setSchool("");
-        setCar("");
-        setSelectedImage(null);
-        navigate('/')
-        } catch (error) {
-        console.error("Error adding document: ", error);
-        }
+            // Save the user data to the Firestore database
+            const userDocRef = await addDoc(collection(db, "users"), userData);
+            console.log("User document written with ID: ", userDocRef.id);
+
+            // Clear the input fields
+            setFirstName("");
+            setLastName("");
+            setBio("");
+            setSchool("");
+            setCar("");
+            setSelectedImage(null);
+            navigate('/')
+            } catch (error) {
+            console.error("Error adding document: ", error);
+            }
+        } else {
+            console.log("No user is currently signed in.");
+          }
     };
 
     const renderStep1 = () => {
@@ -144,7 +154,6 @@ export default function NewUserSignUp() {
                         value={bio}
                         onChange={handleBioChange}
                         className="bioContainer"
-                        maxLength={200}
                     />
                 </div>
                 <div>
@@ -239,22 +248,6 @@ export default function NewUserSignUp() {
             </div>
         </div>
         );
-        // return (
-        // <div>
-        //     <div className="infoContainer">
-        //         <h2>Step 3</h2>
-        //         <div>car</div>
-        //         <input
-        //             type="text"
-        //             name="car"
-        //             value={car}
-        //             onChange={handleCarChange}
-        //         />
-        //     </div>
-        //     <button onClick={handlePrev}>Previous</button>
-        //     <button type="submit" onClick={handleSubmit}>Submit</button>
-        // </div>
-        // );
     };
 
     const renderCurrentStep = () => {

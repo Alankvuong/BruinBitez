@@ -78,16 +78,19 @@ app.post("/api/change-spots", async (req, res) => {
 app.post("/api/add-review", async (req, res) => {
     const userReviewsCollection = collection(db, 'user-reviews');
     try {
-        const {reviewDate, reviewTitle, reviewMessage, reviewRating} = req.body;
+        const {reviewDate, reviewTime, reviewTitle, reviewMessage, reviewRating, riderUID, driverUID} = req.body;
 
         console.log(req.body);
         const newDocRef = doc(collection(db, 'user-reviews'));
         
         await setDoc(newDocRef, {
             reviewDate,
+            reviewTime,
             reviewTitle,
             reviewMessage,
-            reviewRating
+            reviewRating,
+            riderUID,
+            driverUID
         });
 
         console.log("Review submitted succecssfully!");
@@ -98,21 +101,47 @@ app.post("/api/add-review", async (req, res) => {
     }
   });
   
-  app.get("/api/get-reviews", async (req, res) => {
-    try {
-        const reviewsQuery = await getDocs(collection(db, 'user-reviews'));
+    app.get("/api/get-reviews", async (req, res) => {
+        try {
+            const driverUID = req.query.driverUID;
+            const riderUID = req.query.riderUID;
 
-        const documents = [];
-        reviewsQuery.forEach((doc) => {
-            documents.push({ id: doc.id, data: doc.data() });
-        });
+            let reviewsQuery = null;
 
-        res.json(documents);
-    } catch (error) {
-        console.log("Error getting documents", error);
-        res.status(500).json({ error: "Failed to retrieve documents" });
-    }
-  });
+            if(driverUID === '') {
+                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('riderUID', '==', riderUID)));
+            } else {
+                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
+            }
+
+            const documents = [];
+            reviewsQuery.forEach((doc) => {
+                documents.push({ id: doc.id, data: doc.data() });
+            });
+
+            res.json(documents);
+        } catch (error) {
+            console.log("Error getting documents", error);
+            res.status(500).json({ error: "Failed to retrieve documents" });
+        }
+    });
+
+    app.get("/api/get-user-profile", async (req, res) => {
+        try {
+            const uid = req.query.uid;
+
+            console.log("Here 1");
+            userInfoQuery = await getDocs(query(collection(db, 'users'), where('uid', '==', uid)));
+            const documents = [];
+            userInfoQuery.forEach((doc) => {
+                documents.push({ id: doc.id, data: doc.data() });
+            });
+
+            res.json(documents);
+        } catch (err) {
+            console.error("Error getting documents: ", error);
+        }
+    })
 
 app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');

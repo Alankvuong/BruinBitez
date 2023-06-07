@@ -88,6 +88,7 @@ function Navbar() {
             setError(""); // Clear the error message
             setEmail("");
             setPassword("");
+            navigate('/');   
         } catch (error) {
             console.log(error)
         }
