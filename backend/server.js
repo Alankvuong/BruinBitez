@@ -106,13 +106,11 @@ app.post("/api/add-review", async (req, res) => {
 
             console.log("Here 1");
             userInfoQuery = await getDocs(query(collection(db, 'users'), where('uid', '==', uid)));
-            console.log("Here 2");
             const documents = [];
             userInfoQuery.forEach((doc) => {
                 documents.push({ id: doc.id, data: doc.data() });
             });
 
-            console.log("here!");
             res.json(documents);
         } catch (err) {
             console.error("Error getting documents: ", error);
