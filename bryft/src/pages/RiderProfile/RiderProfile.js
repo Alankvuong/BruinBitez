@@ -1,4 +1,4 @@
-import "./DriverProfile.css";
+import "./RiderProfile.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 // import tempPhoto from "../DriverProfilePage/alan_temp_photo.jpg"
@@ -16,12 +16,12 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 
-function DriverProfile() {
+function RiderProfile() {
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
 
-    const profileUrl = "http://localhost:3000/rider-profile?uid=";
+    const profileUrl = "http://localhost:3000/driver-profile?uid=";
 
     useEffect(() => {
         getReviews();
@@ -34,14 +34,29 @@ function DriverProfile() {
 
     const getReviews = async() => {
         try {
-            const urlParams = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-    
-            const driverUID = urlParams.uid;
-            const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}`);
-            const reviews = response.data;
-
+            const auth = await getAuth(); // Get the Firebase Auth instance
+            const user = auth.currentUser; // Get the current user object
+        
+            let reviews = null;
+            if (user) {
+                const riderUID = user.uid; // Get the UID of the current user
+                const driverUID = '';
+            
+                const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+                reviews = response.data;
+                console.log(reviews);
+            } else {
+                const urlParams = new Proxy(new URLSearchParams(window.location.search), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+        
+                const riderUID = urlParams.uid;
+                const driverUID = '';
+            
+                const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+                reviews = response.data;
+            }
+                
             // Sort the reviews by date and time in descending order
             const sortedReviews = reviews.sort((a, b) => {
                 const dateA = a.data.reviewDate;
@@ -58,10 +73,9 @@ function DriverProfile() {
             // Reverse the sorted array to display the reviews in descending order
             const descendingReviews = sortedReviews.reverse();
             
-            console.log(descendingReviews);
+            // console.log(descendingReviews);
             setReviews(descendingReviews);
             // setReviews(response.data);
-            
         } catch (error) {
             console.error("Error getting reviews: ", error);
         }
@@ -86,19 +100,19 @@ function DriverProfile() {
     return (
         <>
             <Navbar/>
-            <div className="driver-profile-page">
-                <div className="driver-container">
-                    <img className="driver-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
-                    <h2 className="driver-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
-                    <h4 className="driver-car">Model: { userInfo[0]?.data.car}</h4>
-                    <p className="driver-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
+            <div className="rider-profile-page">
+                <div className="rider-container">
+                    <img className="rider-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
+                    <h2 className="rider-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                    <h4 className="rider-car">Model: { userInfo[0]?.data.car}</h4>
+                    <p className="rider-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
                 <div className="reviews">
-                    <h3 className="reviews-heading">Reviews They've Received</h3>
+                    <h3 className="reviews-heading">Reviews They've Given</h3>
                     <div className="review-button-section">
-                        <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button>
-                        {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />}
+                        {/* <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button> */}
+                        {/* {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />} */}
                     </div>
                     {reviews.length > 0 ? (
                         reviews.map((review, i) => (
@@ -127,8 +141,8 @@ function DriverProfile() {
                             {review.data.reviewMessage}
                             </AccordionDetails>
                             <AccordionActions>
-                                <div className="rider-info">
-                                    <a href={profileUrl + review.data.riderUID} className="rider-link">View Rider</a>
+                                <div className="driver-info">
+                                    <a href={profileUrl + review.data.driverUID} className="driver-link">View Driver</a>
                                 </div>
                             </AccordionActions>
                         </Accordion>
@@ -144,4 +158,4 @@ function DriverProfile() {
     )
 }
 
-export default DriverProfile;
+export default RiderProfile;

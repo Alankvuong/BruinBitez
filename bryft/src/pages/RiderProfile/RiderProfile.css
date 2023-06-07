@@ -1,17 +1,17 @@
-.driver-profile-page {
+.rider-profile-page {
     display: flex;
     /* flex-direction: column; */
     flex-basis: 100%;
     flex: 1;
 }
 
-.driver-container {
+.rider-container {
     max-width: 300px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
 
-.driver-photo {
+.rider-photo {
     position: relative;
     padding-top: 5%;
     padding-left: 5%;
@@ -20,7 +20,7 @@
     width: auto;
 }
 
-.driver-name {
+.rider-name {
     position: relative;
     padding-left: 5.5%;
     margin-top: 5px;
@@ -28,7 +28,7 @@
     font-size: 2em;
 }
 
-.driver-car {
+.rider-car {
     position: relative;
     padding-left: 5.5%;
     margin-top: 5px;
@@ -36,7 +36,7 @@
     margin-bottom: -10px;
 }
 
-.driver-bio {
+.rider-bio {
     position: relative;
     padding-left: 5.5%;
     width: 360px;
@@ -82,7 +82,7 @@
     padding-right: 10px;
 }
 
-.driver-rating {
+.rider-rating {
     background-color:#439EFF;
     color: white;
     font-weight: 400;
@@ -121,11 +121,11 @@
 
 }
 
-.rider-link{
+.driver-link{
     color: #000000;
 }
 
-.rider-link:hover {
+.driver-link:hover {
     text-decoration: underline;
     cursor: pointer;
 }

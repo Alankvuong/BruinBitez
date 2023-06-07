@@ -6,6 +6,7 @@ import tempPhoto from "./blank-profile-image.webp";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import { AccordionActions } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,9 @@ function UserProfile() {
     const [reviews, setReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
     const [uid, setUID] = useState();
+    
+    const driverProfileUrl = "http://localhost:3000/driver-profile?uid=";
+
 
     useEffect(() => {
         getReviews();
@@ -88,6 +92,7 @@ function UserProfile() {
                 }
                 const response = await axios.get(`http://localhost:8000/api/get-user-profile?uid=${userUID}`);
                 const userInfo = response.data;
+                console.log(userInfo);
                 setUserInfo(userInfo);
             });
         } catch (err) {
@@ -105,14 +110,11 @@ function UserProfile() {
                     <h4 className="user-car">Model: { userInfo[0]?.data.car}</h4>
                     <p className="user-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                     <button onClick={handleOpenModal}>Edit Profile</button>
-                    {isModalOpen && <UserInfoPage
-                        onClose={handleCloseModal} // Pass the close handler 
-                        />
-                    }
+                    {isModalOpen && <UserInfoPage onClose={handleCloseModal} userInfo={userInfo} />}
                 </div>
 
                 <div className="reviews">
-                    <h3 className="reviews-heading">Reviews</h3>
+                    <h3 className="reviews-heading">Reviews You've Given</h3>
                     {reviews.length > 0 ? (
                         reviews.map((review, i) => (
                         <Accordion className="reviews-accordion" key={i}>
@@ -139,11 +141,16 @@ function UserProfile() {
                             <AccordionDetails className="review-expanded">
                             {review.data.reviewMessage}
                             </AccordionDetails>
+                            <AccordionActions>
+                                <div className="driver-info">
+                                    <a href={driverProfileUrl + review.data.driverUID} className="driver-link">View Driver</a>
+                                </div>
+                            </AccordionActions>
                         </Accordion>
                         ))
                     ) : (
                         <Box mt={2}>
-                            <Alert severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                         </Box>
                     )}
                 </div>

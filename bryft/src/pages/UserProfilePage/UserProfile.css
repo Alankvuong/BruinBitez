@@ -15,8 +15,8 @@
     position: relative;
     padding-top: 5%;
     padding-left: 5%;
-    max-height: 350px;
-    height: 300px;
+    max-height: 400px;
+    height: 400px;
     width: auto;
 }
 
@@ -39,7 +39,7 @@
 .user-bio {
     position: relative;
     padding-left: 5.5%;
-    max-width: 300px;
+    width: 340px;
 }
 
 .reviews {
@@ -74,4 +74,13 @@
 
 .review-expanded {
     /* background-color: #b7ddfc;  */
+}
+
+.no-reviews-message {
+    height: 100px;
+    width: 90%;
+}
+
+.driver-link {
+    color: #000000;
 }

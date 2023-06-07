@@ -62,7 +62,6 @@ function ReviewModal({ isOpen: isOpenProp, onClose }) {
         
             if (user) {
               const riderUID = user.uid; // Get the UID of the current user
-
                 try {
                     // sends the necessary review data to firebase through backend api
                     const response = await axios.post("http://localhost:8000/api/add-review", {
