@@ -1,0 +1,149 @@
+.h1-headings {
+    font-size: 72px;
+        font-family: Verdana, sans-serif;
+        color: white;
+        font-weight: bold;
+    position: absolute;
+    top: 33%;
+    width: 853px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.h2-headings {
+    position: absolute;
+    top: 45%;
+    height: auto;
+    width: 80%;
+
+    font-family: 'Verdana', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 35px;
+    text-align: center;
+
+    color: #565656;
+}
+
+.p-tags {
+    position: absolute;
+    top: 60%;
+    width: 85%;
+    height: auto;
+
+    font-family: 'Verdana', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    color: #565656;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.infobox {
+    position: relative;
+    width: 23.4%;
+    min-height: 350px;
+    margin: 1%;
+    left: .5%;
+    background-color: white;
+    float: left;
+    padding: 3%;
+}
+
+.infocontainer {
+    width: 100%;
+    top: 100%;
+    position: absolute;
+}
+
+.backdrop {
+    z-index: -2;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.quickcontainer {
+    justify-content: center;
+    position: absolute;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    width: 600px;
+    height: 60px;
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.textbox {
+    box-sizing: border-box;
+    border: 4px solid #565656;
+    position: relative;
+    width: 240px;
+    height: 60px;
+    z-index: 1;
+    text-align: center;
+
+    font-size: 24px;
+    font-family: Verdana, sans-serif;
+    color: white;
+    
+    font-weight: bold;
+    line-height: 34px;
+    margin: 0px 15px;
+    padding: 8px 10px;
+    text-align: space-between;
+}
+
+.color1{
+    background: rgba(52, 158, 255, 0.60);
+}
+
+.color2 {
+    background: rgba(231, 234, 49, 0.60);
+}
+
+.textbox:hover {
+    border: 4px solid #ffffff;
+}
+
+.divider {
+    background: rgba(52, 158, 255, 0.65);
+    position: static;
+    width: 1%;
+    height: 420px;
+    background: #D9D9D9;
+    border-radius: 48px;
+    float: left;
+    margin-top: 3%;
+    margin-left: 1%;
+    margin-bottom: 3%;
+}
+
+.icon {
+    width: 250px;
+    max-width: 100%;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.backing {
+    background: white;
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    z-index: 0;
+    top: 100%;
+}

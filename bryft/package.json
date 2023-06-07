@@ -15,6 +15,7 @@
     "firebase": "^9.22.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-image-picker-v2": "^1.1.4",
     "react-modal": "^3.16.1",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",

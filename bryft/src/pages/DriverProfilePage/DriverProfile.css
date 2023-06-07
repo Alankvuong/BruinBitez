@@ -1,4 +1,4 @@
-.profile-page {
+.driver-profile-page {
     display: flex;
     /* flex-direction: column; */
     flex-basis: 100%;
@@ -45,11 +45,13 @@
 .reviews {
     margin-left: 8%;
     margin-top: 15px;
+    width: 90%;
 
     .reviews-heading {
         font-size: 2em;
         color: #439EFF;
         text-decoration: underline;
+        margin-bottom: 5px;
     }
 }
 
@@ -69,9 +71,17 @@
 
 .reviews-accordion {
     margin-bottom: 20px;
+    /* width: 100%; */
     max-width: 90%;
 }
 
 .review-expanded {
     /* background-color: #b7ddfc;  */
+}
+
+.review-button-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10%;
+    margin-bottom: 10px;
 }

@@ -47,6 +47,46 @@ app.get('/api/get-rides', async (req, res) => {
     }
 })
 
+// api endpoint to handle user review submission
+app.post("/api/add-review", async (req, res) => {
+    const userReviewsCollection = collection(db, 'user-reviews');
+    try {
+        const {reviewDate, reviewTitle, reviewMessage, reviewRating} = req.body;
+
+        console.log(req.body);
+        const newDocRef = doc(collection(db, 'user-reviews'));
+        
+        await setDoc(newDocRef, {
+            reviewDate,
+            reviewTitle,
+            reviewMessage,
+            reviewRating
+        });
+
+        console.log("Review submitted succecssfully!");
+        res.sendStatus(200);
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
+  });
+  
+  app.get("/api/get-reviews", async (req, res) => {
+    try {
+        const reviewsQuery = await getDocs(collection(db, 'user-reviews'));
+
+        const documents = [];
+        reviewsQuery.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+        });
+
+        res.json(documents);
+    } catch (error) {
+        console.log("Error getting documents", error);
+        res.status(500).json({ error: "Failed to retrieve documents" });
+    }
+  })
+
 app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');
 });
