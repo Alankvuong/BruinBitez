@@ -25,7 +25,7 @@ export default function RidesPage() {
         <div>
             <Navbar />
             <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" m={1} >
-                <Typography variant="h6" className="title-text">
+                <Typography variant="h5" className="title-text">
                     Where are you traveling to?
                 </Typography>
                 <Box display="flex" marginLeft="auto" mb={2}>
