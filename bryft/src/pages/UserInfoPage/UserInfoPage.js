@@ -2,7 +2,8 @@ import "./UserInfoPage.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 function UserInfoPage({ onClose, userInfo }) {
   const [car, setCar] = useState(userInfo[0]?.data.car || null);
@@ -13,6 +14,15 @@ function UserInfoPage({ onClose, userInfo }) {
   useEffect(() => {
     // console.log(selectedImage);
   }, [selectedImage]);
+
+  useEffect(() => {
+    const auth = getAuth(); // Get the Firebase Auth instance
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        onClose();
+      }
+    });
+  }, []);
 
   const handleLabelClick = () => {
     setLabelVisible(!labelVisible);
@@ -26,29 +36,35 @@ function UserInfoPage({ onClose, userInfo }) {
     try {
       const auth = getAuth(); // Get the Firebase Auth instance
       const user = auth.currentUser; // Get the current user object
-      
-      if(user) {
+
+      console.log("USER:", user.uid);
+      if (user) {
         const userUID = user.uid;
-      
+
         const formData = new FormData();
 
         // Append the file to the FormData object
-        formData.append('file', selectedImage);
-    
+        formData.append("file", selectedImage);
+
         // Append other form fields to the FormData object
-        formData.append('car', car);
-        formData.append('bio', bio);
-        formData.append('userUID', userUID);
-    
+        formData.append("car", car);
+        formData.append("bio", bio);
+        formData.append("userUID", userUID);
+
         // Send the FormData object in the POST request
-        const response = await axios.post('http://localhost:8000/api/update-user-profile', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-    }
-  
-      console.log('File uploaded successfully');
+        const response = await axios.post(
+          "http://localhost:8000/api/update-user-profile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+      }
+
+      console.log("File uploaded successfully");
       onClose(); // Close the modal after successful submission
     } catch (err) {
       console.error(err);
@@ -66,6 +82,7 @@ function UserInfoPage({ onClose, userInfo }) {
     setSelectedImage(null);
     setLabelVisible(true);
   };
+
 
   return (
     <Modal
