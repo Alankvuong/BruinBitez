@@ -21,83 +21,66 @@ function UserProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
-    const [uid, setUID] = useState();
-    
+    const [uid, setUID] = useState('');
+  
     const driverProfileUrl = "http://localhost:3000/driver-profile?uid=";
-
-
+  
     useEffect(() => {
-        getReviews();
-        getUserProfileInfo();
-    }, []);   
-
+      const auth = getAuth(); // Get the Firebase Auth instance
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const riderUID = user.uid; // Get the UID of the current user
+          setUID(riderUID);
+          getReviews(riderUID);
+          getUserProfileInfo(riderUID);
+        }
+      });
+    }, []);
+  
     const handleOpenModal = () => {
-        setIsModalOpen(true);
+      setIsModalOpen(true);
     };
-
+  
     const handleCloseModal = () => {
-        setIsModalOpen(false);
-    }; 
-
-    const getReviews = async() => {
-        try {
-            const auth = getAuth(); // Get the Firebase Auth instance
-            const user = auth.currentUser; // Get the current user object
-            console.log(user);
-        
-            if (user) {
-              const riderUID = user.uid; // Get the UID of the current user
-              const driverUID = '';
-            
-                const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
-                const reviews = response.data;
-
-                // Sort the reviews by date and time in descending order
-                const sortedReviews = reviews.sort((a, b) => {
-                    const dateA = a.data.reviewDate;
-                    const timeA = a.data.reviewTime;
-                    const dateB = b.data.reviewDate;
-                    const timeB = b.data.reviewTime;
-                
-                    const dateTimeA = new Date(`${dateA} ${timeA}`);
-                    const dateTimeB = new Date(`${dateB} ${timeB}`);
-                
-                    return dateTimeA - dateTimeB;
-                });
-
-                // Reverse the sorted array to display the reviews in descending order
-                const descendingReviews = sortedReviews.reverse();
-                
-                console.log(descendingReviews);
-                setReviews(descendingReviews);
-            }
-            
-        } catch (error) {
-            console.error("Error getting reviews: ", error);
-        }
-    }
-
-    const getUserProfileInfo = async() => {
-
-        try {
-            const auth = await getAuth(); // Get the Firebase Auth instance
-            onAuthStateChanged(auth, async(user) => {
-                
-                var userUID = '';
-                if (user) {
-                    userUID = user.uid; // Get the UID of the current user
-                    setUID(userUID);
-                } else { 
-                    console.log("User is not logged in");
-                }
-                const response = await axios.get(`http://localhost:8000/api/get-user-profile?uid=${userUID}`);
-                const userInfo = response.data;
-                console.log(userInfo);
-                setUserInfo(userInfo);
-            });
-        } catch (err) {
-            console.error("Error fetching user information.", err)
-        }
+      setIsModalOpen(false);
+    };
+  
+    const getReviews = async (riderUID) => {
+      try {
+        const driverUID = '';
+        const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+        const reviews = response.data;
+  
+        // Sort the reviews by date and time in descending order
+        const sortedReviews = reviews.sort((a, b) => {
+          const dateA = a.data.reviewDate;
+          const timeA = a.data.reviewTime;
+          const dateB = b.data.reviewDate;
+          const timeB = b.data.reviewTime;
+  
+          const dateTimeA = new Date(`${dateA} ${timeA}`);
+          const dateTimeB = new Date(`${dateB} ${timeB}`);
+  
+          return dateTimeA - dateTimeB;
+        });
+  
+        // Reverse the sorted array to display the reviews in descending order
+        const descendingReviews = sortedReviews.reverse();
+  
+        setReviews(descendingReviews);
+      } catch (error) {
+        console.error("Error getting reviews: ", error);
+      }
+    };
+  
+    const getUserProfileInfo = async (riderUID) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/get-user-profile?uid=${riderUID}`);
+        const userInfo = response.data;
+        setUserInfo(userInfo);
+      } catch (err) {
+        console.error("Error fetching user information.", err)
+      }
     };
 
     return (

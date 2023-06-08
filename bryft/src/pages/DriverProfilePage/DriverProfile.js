@@ -134,7 +134,7 @@ function DriverProfile() {
                         </Accordion>
                         ))
                     ) : (
-                        <Box mt={2}>
+                        <Box className="no-reviews-msg" mt={2}>
                             <Alert severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                         </Box>
                     )}
