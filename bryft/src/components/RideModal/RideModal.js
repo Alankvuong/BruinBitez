@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, InputAdornment, OutlinedInput } from '@mui/material';
 import axios from 'axios';
 import "./RideModal.css";
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import dayjs, { Dayjs } from 'dayjs';
+
 
 export default function RideModal() {
   const [open, setOpen] = useState(false);
+  const [dateTime, setDateTime] = useState(dayjs('2022-04-17T15:30'));
   const [rideData, setRideData] = useState({
     origin: '',
     destination: '',
     driver: '',
-    departureTime: '',
     price: '',
     uid: '',
-    numSpots: 0
+    numSpots: 0,
+    dateTime: ''
   });
 
   //tracks if user is logged in
@@ -26,7 +33,7 @@ export default function RideModal() {
       console.log("current user", currentUser);
       setIsLoggedIn(!!currentUser);
       if (currentUser?.uid) {
-        axios.get('http://localhost:8000/api/get-name', { params: {uid: currentUser.uid} })
+        axios.get('http://localhost:8000/api/get-name', { params: { uid: currentUser.uid } })
           .then((response) => {
             name = response.data.name;
             setRideData({ ...rideData, driver: name, uid: currentUser.uid });
@@ -56,8 +63,34 @@ export default function RideModal() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(rideData);
-    axios.post('http://localhost:8000/api/create-ride', rideData)
+
+    //format departure date and time into string
+    let dateTimeStr = (dateTime.$M + 1) + '/' + dateTime.$D + '/' + dateTime.$y + " ";
+
+    let minuteStr = dateTime.$m;
+    if (dateTime.$m  < 10) {
+      minuteStr = "0" + minuteStr;
+    }
+
+    if (dateTime.$H === 12) {
+      dateTimeStr += "12:" + minuteStr + "PM";
+    } else if (dateTime.$H === 0) {
+      dateTimeStr += "12:" + minuteStr + "AM";
+    } else if (dateTime.$H < 10) {
+      dateTimeStr += dateTime.$H + ":" + minuteStr + "AM";
+    } else {
+      dateTimeStr += (dateTime.$H - 12) + ":" + minuteStr + "PM";
+    }
+    
+    console.log(dateTimeStr);
+
+    //check that all fields of form have been filled out
+    if (rideData.origin === '' || rideData.destination === '' || rideData.price === '' || rideData.departureTime === '' || rideData.numSpots === 0) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    axios.post('http://localhost:8000/api/create-ride', {...rideData, dateTime: dateTimeStr})
       .then((response) => {
         console.log('Response:', response.data);
       })
@@ -79,11 +112,15 @@ export default function RideModal() {
         <DialogTitle>Ride Details</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
-            <TextField label="Where will you be leaving from?" name="origin" value={rideData.origin} onChange={handleChange} margin="normal" fullWidth />
-            <TextField label="Where will you be heading?" name="destination" value={rideData.destination} onChange={handleChange} margin="normal" fullWidth />
-            <TextField label="Price" name="price" value={rideData.price} onChange={handleChange} margin="normal" />
-            <TextField label="Departure Time" name="departureTime" value={rideData.departureTime} onChange={handleChange} margin="normal" fullWidth />
-            <TextField label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" />
+            <TextField required label="Where will you be leaving from?" name="origin" value={rideData.origin} onChange={handleChange} margin="normal" fullWidth />
+            <TextField required label="Where will you be heading?" name="destination" value={rideData.destination} onChange={handleChange} margin="normal" fullWidth />
+            <TextField InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }} required label="Price" name="price" value={rideData.price} onChange={handleChange} margin="normal" />
+            <TextField required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DateTimePicker']}>
+                <DateTimePicker label="Departure Date and Time" value={rideData.dateTime} onChange={(newDatetime) => setDateTime(newDatetime)} disablePast />
+              </DemoContainer>
+            </LocalizationProvider>
           </form>
         </DialogContent>
         <DialogActions>

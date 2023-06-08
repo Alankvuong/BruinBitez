@@ -37,7 +37,7 @@ export default function RidesPage() {
                                 origin={item.origin}
                                 destination={item.destination}
                                 driver={item.driver}
-                                departureTime={item.departureTime}
+                                dateTime={item.dateTime}
                                 price={item.price}
                                 uid={item.uid}
                                 numSpots={item.numSpots}
