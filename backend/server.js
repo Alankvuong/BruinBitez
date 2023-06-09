@@ -58,6 +58,22 @@ app.post('/api/create-ride', async (req, res) => {
 //api endpoint to fetch existing ride posts
 app.get('/api/get-rides', async (req, res) => {
     try {
+        const ridesRef = collection(db, 'rides');
+        let queryRef = query(ridesRef);
+
+        Object.entries(req.query).forEach(([field, value]) => {
+            if (value !== '') {
+                queryRef = query(queryRef, where(field, '==', value));
+            }
+        });
+
+        const querySnapshot = await getDocs(queryRef);
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+        res.json(documents);
+    } catch (err) {
+        console.error("Error submitting user information", err);
+        res.sendStatus(500);
+    }
         // const ridesRef = collection(db, 'rides');
         // const ridesSnapshot = await getDocs(ridesRef);
         // const allOrigins = []; //store origins of all rides
@@ -103,23 +119,6 @@ app.get('/api/get-rides', async (req, res) => {
         // const querySnapshot = await getDocs(queryRef);
         // const documents = querySnapshot.docs.map((doc) => doc.data());
         // res.json(documents);
-
-        const ridesRef = collection(db, 'rides');
-        let queryRef = query(ridesRef);
-
-        Object.entries(req.query).forEach(([field, value]) => {
-            if (value !== '') {
-                queryRef = query(queryRef, where(field, '==', value));
-            }
-        });
-
-        const querySnapshot = await getDocs(queryRef);
-        const documents = querySnapshot.docs.map((doc) => doc.data());
-        res.json(documents);
-    } catch (err) {
-        console.error("Error submitting user information", err);
-        res.sendStatus(500);
-    }
 })
 
 //api endpoint to change number of available spots in the ride
