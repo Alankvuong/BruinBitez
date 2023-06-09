@@ -19,7 +19,8 @@ import Box from "@mui/material/Box";
 
 function UserProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [reviews, setReviews] = useState([]);
+    const [riderReviews, setRiderReviews] = useState([]);
+    const [driverReviews, setDriverReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
     const [uid, setUID] = useState('');
   
@@ -46,31 +47,66 @@ function UserProfile() {
     };
   
     const getReviews = async (riderUID) => {
-      try {
-        const driverUID = '';
-        const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
-        const reviews = response.data;
-  
-        // Sort the reviews by date and time in descending order
-        const sortedReviews = reviews.sort((a, b) => {
-          const dateA = a.data.reviewDate;
-          const timeA = a.data.reviewTime;
-          const dateB = b.data.reviewDate;
-          const timeB = b.data.reviewTime;
-  
-          const dateTimeA = new Date(`${dateA} ${timeA}`);
-          const dateTimeB = new Date(`${dateB} ${timeB}`);
-  
-          return dateTimeA - dateTimeB;
-        });
-  
-        // Reverse the sorted array to display the reviews in descending order
-        const descendingReviews = sortedReviews.reverse();
-  
-        setReviews(descendingReviews);
-      } catch (error) {
-        console.error("Error getting reviews: ", error);
-      }
+
+        let uid = riderUID;
+        // Getting rider reviews (reviews you've given)
+        try {
+            const driverUID = 0;
+            const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+            const reviews = response.data;
+    
+            // Sort the reviews by date and time in descending order
+            const sortedReviews = reviews.sort((a, b) => {
+            const dateA = a.data.reviewDate;
+            const timeA = a.data.reviewTime;
+            const dateB = b.data.reviewDate;
+            const timeB = b.data.reviewTime;
+    
+            const dateTimeA = new Date(`${dateA} ${timeA}`);
+            const dateTimeB = new Date(`${dateB} ${timeB}`);
+    
+            return dateTimeA - dateTimeB;
+            });
+    
+            // Reverse the sorted array to display the reviews in descending order
+            const descendingReviews = sortedReviews.reverse();
+    
+            setRiderReviews(descendingReviews);
+            console.log(descendingReviews);
+        } catch (error) {
+            console.error("Error getting reviews: ", error);
+        }
+
+        // Getting driver reviews (reviews you've given)
+        try {
+            const driverUID = uid;
+            const riderUID = 0;
+            const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+            const reviews = response.data;
+            console.log(reviews)
+    
+            // Sort the reviews by date and time in descending order
+            const sortedReviews = reviews.sort((a, b) => {
+            const dateA = a.data.reviewDate;
+            const timeA = a.data.reviewTime;
+            const dateB = b.data.reviewDate;
+            const timeB = b.data.reviewTime;
+    
+            const dateTimeA = new Date(`${dateA} ${timeA}`);
+            const dateTimeB = new Date(`${dateB} ${timeB}`);
+    
+            return dateTimeA - dateTimeB;
+            });
+    
+            // Reverse the sorted array to display the reviews in descending order
+            const descendingReviews = sortedReviews.reverse();
+    
+            setDriverReviews(descendingReviews);
+            console.log("Descending reviews:", descendingReviews);
+        } catch (error) {
+            console.error("Error getting reviews: ", error);
+        }
+
     };
   
     const getUserProfileInfo = async (riderUID) => {
@@ -88,7 +124,7 @@ function UserProfile() {
             <Navbar/>
             <div className="profile-page">
                 <div className="user-container">
-                    <img className="user-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
+                    <img className="user-photo" src={ userInfo && userInfo !== undefined? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
                     <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
                     <h4 className="user-car">Model: { userInfo[0]?.data.car}</h4>
                     <p className="user-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
@@ -96,46 +132,95 @@ function UserProfile() {
                     {isModalOpen && <UserInfoPage onClose={handleCloseModal} userInfo={userInfo} />}
                 </div>
 
-                <div className="reviews">
-                    <h3 className="reviews-heading">Reviews You've Given</h3>
-                    {reviews.length > 0 ? (
-                        reviews.map((review, i) => (
-                        <Accordion className="reviews-accordion" key={i}>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            className="review-title"
-                            >
-                            <div className="user-rating">
-                                {review.data.reviewRating.toFixed(1)}
-                            </div>
-                            <div className="review-title">{review.data.reviewTitle}</div>
-                            <div className="date-time">
-                                <div className="review-date">{review.data.reviewDate}</div>
-                                <div className="date-time-separator">|</div>
-                                <div className="review-time">
-                                {review.data.reviewTime &&
-                                    `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
-                                    2,
-                                    "0"
-                                    )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                <div className="encompassing-reviews-container">
+
+                    <div className="user-reviews-container">
+                        <div className="reviews-heading-container">
+                            <h3 className="reviews-heading">Reviews You've Wrote!</h3>
+                        </div>
+                        {riderReviews.length > 0 ? (
+                            riderReviews.map((review, i) => (
+                            <Accordion className="reviews-accordion" key={i}>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                className="review-title"
+                                >
+                                <div className="user-rating">
+                                    {review.data.reviewRating.toFixed(1)}
                                 </div>
-                            </div>
-                            </AccordionSummary>
-                            <AccordionDetails className="review-expanded">
-                            {review.data.reviewMessage}
-                            </AccordionDetails>
-                            <AccordionActions>
-                                <div className="driver-info">
-                                    <a href={driverProfileUrl + review.data.driverUID} className="driver-link">View Driver</a>
+                                <div className="review-title">{review.data.reviewTitle}</div>
+                                <div className="date-time">
+                                    <div className="review-date">{review.data.reviewDate}</div>
+                                    <div className="date-time-separator">|</div>
+                                    <div className="review-time">
+                                    {review.data.reviewTime &&
+                                        `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
+                                        2,
+                                        "0"
+                                        )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                                    </div>
                                 </div>
-                            </AccordionActions>
-                        </Accordion>
-                        ))
-                    ) : (
-                        <Box mt={2}>
-                            <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
-                        </Box>
-                    )}
+                                </AccordionSummary>
+                                <AccordionDetails className="review-expanded">
+                                {review.data.reviewMessage}
+                                </AccordionDetails>
+                                <AccordionActions>
+                                    <div className="driver-info">
+                                        <a href={driverProfileUrl + review.data.driverUID} className="driver-link">View Driver</a>
+                                    </div>
+                                </AccordionActions>
+                            </Accordion>
+                            ))
+                        ) : (
+                            <Box mt={2}>
+                                <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            </Box>
+                        )}
+                    </div>
+
+                    <div className="user-reviews-container">
+                        <div className="reviews-heading-container">
+                            <h3 className="reviews-heading">Reviews You've Received!</h3>
+                        </div>
+                        {driverReviews.length > 0 ? (
+                            driverReviews.map((review, i) => (
+                            <Accordion className="reviews-accordion" key={i}>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                className="review-title"
+                                >
+                                <div className="user-rating">
+                                    {review.data.reviewRating.toFixed(1)}
+                                </div>
+                                <div className="review-title">{review.data.reviewTitle}</div>
+                                <div className="date-time">
+                                    <div className="review-date">{review.data.reviewDate}</div>
+                                    <div className="date-time-separator">|</div>
+                                    <div className="review-time">
+                                    {review.data.reviewTime &&
+                                        `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
+                                        2,
+                                        "0"
+                                        )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                                    </div>
+                                </div>
+                                </AccordionSummary>
+                                <AccordionDetails className="review-expanded">
+                                {review.data.reviewMessage}
+                                </AccordionDetails>
+                                <AccordionActions>
+                                    <div className="driver-info">
+                                        <a href={driverProfileUrl + review.data.riderUID} className="driver-link">View Rider</a>
+                                    </div>
+                                </AccordionActions>
+                            </Accordion>
+                            ))
+                        ) : (
+                            <Box mt={2}>
+                                <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            </Box>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
