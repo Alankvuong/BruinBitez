@@ -89,7 +89,9 @@ function Navbar() {
             setError(""); // Clear the error message
             setEmail("");
             setPassword("");
-            navigate('/');   
+            navigate('/');
+            window.location.reload(false);
+
         } catch (error) {
             console.log(error)
         }
@@ -145,6 +147,7 @@ function Navbar() {
                                     setPassword={setPassword}
                                     error={error}
                                 />
+
                             </div>
                         </div>
                     )}

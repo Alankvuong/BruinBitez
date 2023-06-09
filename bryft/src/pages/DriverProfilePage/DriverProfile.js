@@ -94,8 +94,10 @@ function DriverProfile() {
                     <p className="driver-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
-                <div className="reviews">
-                    <h3 className="reviews-heading">Reviews They've Received</h3>
+                <div className="driver-reviews-container">
+                    <div className="reviews-heading-container">
+                        <h3 className="reviews-heading">Reviews They've Received</h3>
+                    </div>
                     <div className="review-button-section">
                         <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button>
                         {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />}
@@ -134,7 +136,7 @@ function DriverProfile() {
                         </Accordion>
                         ))
                     ) : (
-                        <Box mt={2}>
+                        <Box className="no-reviews-msg" mt={2}>
                             <Alert severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                         </Box>
                     )}

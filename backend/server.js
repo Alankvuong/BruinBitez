@@ -122,71 +122,85 @@ async function getDocumentIdFromUid(uid) {
 
 // POST route for updating user profile
 app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, res) => {
+    console.log("Hitting /api/update-user-profile API");
     try {
-    const { car, bio, userUID } = req.body;
-    const selectedImage = req.file; // Access the uploaded file using req.file
+        const { car, bio, userUID } = req.body;
+        const selectedImage = req.file; // Access the uploaded file using req.file
+        // console.log(req.body);
 
-    // Your existing code to get the document ID from the user UID
-    const uid = userUID;
-    getDocumentIdFromUid(uid)
-        .then(async (documentId) => {
-        if (documentId) {
-            console.log('Document ID:', documentId);
-            const userDocRef = doc(db, 'users', documentId);
+        // console.log("Selected image: ");
+        // console.log(selectedImage);
 
-            if(selectedImage === null){
-                // Upload the file to Firebase Storage
-                const storageRef = ref(firebaseStorage, `images/${userUID}/${selectedImage.originalname}`);
-                await uploadBytes(storageRef, selectedImage.buffer);
-    
-                // Get the download URL of the uploaded file
-                const downloadURL = await getDownloadURL(storageRef);
+        // console.log("User ID:", userUID);
+        // Your existing code to get the document ID from the user UID
+        const uid = userUID;
+        getDocumentIdFromUid(uid)
+            .then(async (documentId) => {
+                // console.log(documentId);
+                if (documentId) {
+                    const userDocRef = doc(db, 'users', documentId);
 
-                // Update the user document in Firestore with the download URL
-                await updateDoc(userDocRef, {
-                car,
-                bio,
-                selectedImage: downloadURL,
-                });
-            } else {
-                // Update the user document in Firestore with the download URL
-                await updateDoc(userDocRef, {
-                    car,
-                    bio,
-                    });
-            }
+                    console.log(selectedImage);
+                    if (selectedImage !== undefined) {
+                        // console.log(selectedImage);
+                        // console.log("Inside if statement");
+                        // Upload the file to Firebase Storage
+                        const storageRef = ref(firebaseStorage, `images/${userUID}/${selectedImage.originalname}`);
+                        await uploadBytes(storageRef, selectedImage.buffer);
+        
+                        // Get the download URL of the uploaded file
+                        const downloadURL = await getDownloadURL(storageRef);
 
+                        // Update the user document in Firestore with the download URL
+                        await updateDoc(userDocRef, {
+                            car,
+                            bio,
+                            selectedImage: downloadURL,
+                        });
+                    } else {
+                        // Update the user document in Firestore without the download URL
+                        await updateDoc(userDocRef, {
+                            car,
+                            bio,
+                        });
+                    }
 
-            console.log('User profile updated successfully!');
-            res.sendStatus(200);
-        } else {
-            console.log('Document not found for UID:', uid);
-        }
-        })
-        .catch((error) => {
-        console.error('Error retrieving document ID:', error);
-        res.sendStatus(500);
-        });
+                    console.log('User profile updated successfully!');
+                    res.sendStatus(200);
+                } else {
+                    console.log('Document not found for UID:', uid);
+                }
+            })
+            .catch((error) => {
+                console.error('Error retrieving document ID:', error);
+                res.sendStatus(500);
+            });
     } catch (err) {
-    console.error('Error submitting user information', err);
-    res.sendStatus(500);
+        console.error('Error submitting user information', err);
+        res.sendStatus(500);
     }
 });
   
     app.get("/api/get-reviews", async (req, res) => {
+        console.log("Hitting /api/get-reviews");
         try {
-            const driverUID = req.query.driverUID;
-            const riderUID = req.query.riderUID;
+            let driverUID = req.query.driverUID;
+            let riderUID = req.query.riderUID;
+
+            console.log("Driver UID: ", driverUID);
+            console.log("Rider UID: ", riderUID);
 
             let reviewsQuery = null;
 
-            if(driverUID === '') {
+            if(driverUID === '0') {
                 reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('riderUID', '==', riderUID)));
+            } else if (riderUID === '0') {
+                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
             } else {
                 reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
             }
 
-            const documents = [];
+            let documents = [];
             reviewsQuery.forEach((doc) => {
                 documents.push({ id: doc.id, data: doc.data() });
             });

@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
 .h1-headings {
-    font-size: 72px;
-        font-family: Verdana, sans-serif;
+    font-size: 80px;
+        font-family: 'Ubuntu', sans-serif;
         color: white;
         font-weight: bold;
     position: absolute;
@@ -18,10 +22,10 @@
     height: auto;
     width: 80%;
 
-    font-family: 'Verdana', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-style: normal;
-    font-weight: 700;
-    font-size: 22px;
+    font-weight: bold;
+    font-size: 30px;
     line-height: 35px;
     text-align: center;
 
@@ -34,7 +38,7 @@
     width: 85%;
     height: auto;
 
-    font-family: 'Verdana', sans-serif;
+    font-family: 'Amiko', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -60,16 +64,21 @@ a {
 
 .infocontainer {
     width: 100%;
-    top: 100%;
-    position: absolute;
+    position: relative;
+    top: 50px;
+    z-index: 1;
 }
 
 .backdrop {
     z-index: -2;
-    position: absolute;
+    position: sticky;
     top: 0;
     width: 100%;
-    height: 100%;
+}
+
+.bodycontainer {
+    width: 100%;
+    height: 1500px;
 }
 
 .quickcontainer {
@@ -83,51 +92,142 @@ a {
     display: flex;
     margin: auto;
     flex-wrap: wrap;
+    
 }
 
 .textbox {
     box-sizing: border-box;
-    border: 4px solid #565656;
+    border: 4px solid #00000000;
+    border-radius: 10px;
     position: relative;
     width: 240px;
-    height: 60px;
+    height: 70px;
     z-index: 1;
     text-align: center;
 
-    font-size: 24px;
-    font-family: Verdana, sans-serif;
+    font-size: 26px;
+    font-family: 'Ubuntu', sans-serif;
     color: white;
     
     font-weight: bold;
     line-height: 34px;
     margin: 0px 15px;
-    padding: 8px 10px;
-    text-align: space-between;
+    padding: 13px 10px;
 }
 
 .color1{
-    background: rgba(52, 158, 255, 0.60);
+    background: rgba(52, 158, 255, 0.70);
 }
 
 .color2 {
-    background: rgba(231, 234, 49, 0.60);
+    background: rgba(231, 234, 49, 0.70);
 }
 
-.textbox:hover {
+.color1:hover {
+    background: rgba(112, 186, 255, 0.7);
+    border: 4px solid #ffffff;
+}
+
+.color2:hover {
+    background: rgba(253, 255, 138, 0.7);
     border: 4px solid #ffffff;
 }
 
 .divider {
     background: rgba(52, 158, 255, 0.65);
     position: static;
-    width: 1%;
+    width: .5%;
     height: 420px;
     background: #D9D9D9;
     border-radius: 48px;
     float: left;
-    margin-top: 3%;
+    margin-top: 2%;
     margin-left: 1%;
     margin-bottom: 3%;
+}
+
+.logincontainer {
+    width: 100%;
+    height: 90px;
+    position: fixed;
+    background-color: white;
+    z-index: 10;
+    box-shadow: 0 2px 10px -2px rgb(100, 100, 100);
+    bottom: 0;
+
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.logintext {
+    float: left;
+    width: 420px;
+    height: 20px;
+    position: relative;
+    font-family: 'Amiko', sans-serif;
+    font-size: 18px;
+    color: #565656;
+    /* border: solid 3px black; */
+    position: relative;
+    transform: translate(0%, -50%);
+    top: 50%;
+    text-align: center;
+    padding: 10px 5px;
+    margin-right: 20px;
+}
+
+.logintext2 {
+    float: left;
+    width: 270px;
+    height: 20px;
+    position: relative;
+    font-family: 'Amiko', sans-serif;
+    font-size: 18px;
+    /* border: solid 3px black; */
+    position: relative;
+    transform: translate(0%, -50%);
+    top: 50%;
+    text-align: center;
+    padding: 10px 5px;
+    margin-left: 50px;
+    color: #565656;
+}
+
+.loginbutton {
+    float: left;
+    box-sizing: border-box;
+    border: 4px solid #00000000;
+    border-radius: 5px;
+    position: relative;
+    width: 150px;
+    height: 50px;
+    z-index: 1;
+    text-align: center;
+    background-color: rgba(52, 158, 255, 0.70);
+
+    font-size: 24px;
+    font-family: 'Ubuntu', sans-serif;
+    color: white;
+
+    font-weight: bold;
+    line-height: 34px;
+    position: relative;
+    top: 23%;
+    padding: 3px 10px;
+}
+
+.loginbutton:hover {
+    border-color: rgba(52, 158, 255, 0.70);
+    background-color: #00000000;
+    color: rgba(52, 158, 255, 0.70);
+}
+
+.signuplink {
+    font-family: 'Amiko', sans-serif;
+    font-size: 18px;
+    color: #3e71b9;
+    font-weight: bold;
 }
 
 .icon {
@@ -141,9 +241,75 @@ a {
 
 .backing {
     background: white;
-    position: absolute;
+    position: static;
     width: 100%;
-    height: 80%;
-    z-index: 0;
-    top: 100%;
+    height: 1000px;
+    z-index: -.5;
+}
+
+.backing {
+    background: white;
+    position: static;
+    width: 100%;
+    height: 1000px;
+    z-index: -.5;
+    /* border: solid 5px black; */
+}
+
+.additionalinfocontainer {
+    position: relative;
+    width: 100%;
+    height: 55%;
+    background: #ebeaea;
+    float: left;
+    z-index: 2;
+    margin-top: 70px;
+    box-shadow: 0 0 10px -2px rgb(100, 100, 100);
+}
+
+.additionalinfo {
+    width: 40%;
+    height: 73%;
+    background: url('./janss.png');
+    border-radius: 25px;
+    object-position: 0% 100px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 105% 110%;
+    opacity: 1;
+    object-fit: cover;
+    margin-left: 7%;
+    text-align: center;
+    margin-top: 70px;
+    float: left;
+}
+
+.additionalinfotext {
+    width: 40%;
+    height: 350px;
+    position: relative;
+    padding-top: 60px;
+    margin: 70px;
+    text-align: left;
+    float: left;
+    color: #3e71b9;
+    font-size: 74px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+
+.footercontainer {
+    position: relative;
+    width: fill;
+    height: 250px;
+    background: #ffffff;
+    float: left;
+    z-index: 1;
+    padding: 20px;
+}    
+
+.footerheading {
+    color:rgb(100, 100, 100);
+    font-size: 14px;
+    width: 80%;
 }
