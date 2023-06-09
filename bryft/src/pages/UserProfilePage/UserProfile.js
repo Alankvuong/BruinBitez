@@ -107,7 +107,6 @@ function UserProfile() {
             console.error("Error getting reviews: ", error);
         }
 
-        
     };
   
     const getUserProfileInfo = async (riderUID) => {
