@@ -88,7 +88,9 @@ function Navbar() {
             setError(""); // Clear the error message
             setEmail("");
             setPassword("");
-            navigate('/');   
+            navigate('/');
+            window.location.reload(false);
+
         } catch (error) {
             console.log(error)
         }
@@ -137,6 +139,7 @@ function Navbar() {
                                             height: '100%',
                                             alignSelf: 'center',
                                             backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                            zIndex: 20,
                                         },
                                         content: {
                                             width: '30%',
@@ -146,6 +149,7 @@ function Navbar() {
                                             position: 'absolute',
                                             top: '9.5%',
                                             left: '34%',
+                                            zIndex: 20,
                                             marginTop: '-1%',
                                         }
                                     }}
