@@ -76,12 +76,12 @@ export default function RideModal() {
       dateTimeStr += "12:" + minuteStr + "PM";
     } else if (dateTime.$H === 0) {
       dateTimeStr += "12:" + minuteStr + "AM";
-    } else if (dateTime.$H < 10) {
+    } else if (dateTime.$H < 12) {
       dateTimeStr += dateTime.$H + ":" + minuteStr + "AM";
     } else {
       dateTimeStr += (dateTime.$H - 12) + ":" + minuteStr + "PM";
     }
-    
+
     console.log(dateTimeStr);
 
     //check that all fields of form have been filled out
