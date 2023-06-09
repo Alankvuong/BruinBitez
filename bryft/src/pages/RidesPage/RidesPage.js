@@ -86,9 +86,10 @@ export default function RidesPage() {
                                 driver={item.driver}
                                 dateTime={item.displayDateTime}
                                 price={item.price}
-                                uid={item.uid}
+                                driverUid={item.driverUid}
                                 numSpots={item.numSpots}
                                 docId={item.docId}
+                                riderUids={item.riderUids}
                             />
                         ))}
                     </Container>
