@@ -6,6 +6,34 @@
     font-weight: bold;
 }
 
+.filter-container {
+    width: 300px !important;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 14px;
+}
+
+.filter-category {
+    width: 100%;
+    font-family: 'amiko';
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color:#2D92FF;
+}
+
+.filter {
+    width: 100%;
+    height: 25px;
+}
+
+.rides-container {
+    width: 100% !important;
+}
+
 /* .ride-button {
     background-color: #439EFF;
     color: #FFFFFF;
