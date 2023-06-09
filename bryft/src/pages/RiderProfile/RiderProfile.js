@@ -30,8 +30,17 @@ function RiderProfile() {
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             console.log("user is true");
-            const riderUID = user.uid; // Get the UID of the current user
-            getReviews(riderUID);
+            //const riderUID = user.uid; // Get the UID of the current user
+            const urlParams = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+    
+            const riderUID = urlParams.uid;
+            const driverUID = 0;
+        
+            const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}&riderUID=${riderUID}`);
+            setReviews(response.data);
+            //getReviews(riderUID);
             getUserProfileInfo(riderUID);
           }
         });
