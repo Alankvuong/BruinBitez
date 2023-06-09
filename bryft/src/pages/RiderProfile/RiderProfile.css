@@ -1,23 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+body {
+    font-family: 'Amiko', sans-serif;
+}
+
 .rider-profile-page {
     display: flex;
-    /* flex-direction: column; */
     flex-basis: 100%;
     flex: 1;
 }
 
 .rider-container {
-    max-width: 300px;
+    max-width: 350px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
 
 .rider-photo {
     position: relative;
-    padding-top: 5%;
-    padding-left: 5%;
+    margin-top: 5%;
+    margin-left: 5%;
     max-height: 400px;
-    height: 360px;
-    width: auto;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
 }
 
 .rider-name {
@@ -28,40 +34,72 @@
     font-size: 2em;
 }
 
+.name-rating {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+        position: relative;
+        padding-left: 5.5%;
+        font-size: 2em;
+        margin: 5px 10px 5px 0px;
+        /* width: 100%; */
+    }
+
+    .review-star-icon {
+        font-size: 2em;
+        color: gray;
+    }
+
+    .avg-user-rating {
+        font-size: 1.4em;
+        text-align: center;
+        color: rgb(79, 78, 78);
+
+        /* padding-top: 2px; */
+    }
+}
+
 .rider-car {
     position: relative;
     padding-left: 5.5%;
-    margin-top: 5px;
+    margin-top: -2px;
     font-size: 1.3em;
     margin-bottom: -10px;
+    width: 100%;
 }
 
 .rider-bio {
     position: relative;
     padding-left: 5.5%;
-    width: 360px;
+    width: 340px;
 }
 
-.reviews {
-    margin-left: 8%;
+.rider-reviews-container {
+    margin-left: 4%;
     margin-top: 15px;
-    width: 90%;
+    width: 100%;
+    
+    .reviews-heading-container {
+        width: 90%;
+        height: 10%;
+        background-color: #5ea8f8;
+        border-radius: 10px !important;
+        margin-bottom: 20px;    
 
-    .reviews-heading {
-        font-size: 2em;
-        color: #439EFF;
-        text-decoration: underline;
-        margin-bottom: 5px;
+        .reviews-heading {
+            font-size: 2em;
+            color: white;
+            /* text-decoration: underline; */
+            text-align: center;
+            padding: 0.6em 0 0.6em 0;
+        }   
     }
 }
 
 .review-title {
     text-align: center;
     padding-top: 10px;
-    font-weight: 800;
-    font-size: 18px;
-    color: #439EFF;
-    padding-left: 16px;
 }
 
 .review-date {
@@ -89,16 +127,26 @@
     font-size: 1.5em;
     padding: 5px 10px 5px 10px;
     margin-right: 5px;
+    border-radius: 10px !important;
 }
 
 .reviews-accordion {
     margin-bottom: 20px;
-    /* width: 100%; */
     max-width: 90%;
+    border-radius: 10px !important;
 }
 
 .review-expanded {
     /* background-color: #b7ddfc;  */
+}
+
+.no-reviews-container {
+    width: 100%;
+    height: 100px;
+}
+
+.no-reviews-message {
+    height: 100px;
 }
 
 .review-button-section {
@@ -118,7 +166,6 @@
     color: #7B7B7B;
     margin-top: 6px;
     font-weight: 600;
-
 }
 
 .driver-link{
@@ -128,4 +175,9 @@
 .driver-link:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.encompassing-reviews-container {
+    width: 90%;
+    margin-left: 100px;
 }

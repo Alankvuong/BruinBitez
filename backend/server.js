@@ -192,8 +192,8 @@ app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, r
                 if (documentId) {
                     const userDocRef = doc(db, 'users', documentId);
 
-                    // console.log(selectedImage);
-                    if (selectedImage !== null) {
+                    console.log(selectedImage);
+                    if (selectedImage !== undefined) {
                         // console.log(selectedImage);
                         // console.log("Inside if statement");
                         // Upload the file to Firebase Storage
@@ -234,19 +234,25 @@ app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, r
 });
   
     app.get("/api/get-reviews", async (req, res) => {
+        console.log("Hitting /api/get-reviews");
         try {
-            const driverUID = req.query.driverUID;
-            const riderUID = req.query.riderUID;
+            let driverUID = req.query.driverUID;
+            let riderUID = req.query.riderUID;
+
+            console.log("Driver UID: ", driverUID);
+            console.log("Rider UID: ", riderUID);
 
             let reviewsQuery = null;
 
-            if(driverUID === '') {
+            if(driverUID === '0') {
                 reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('riderUID', '==', riderUID)));
+            } else if (riderUID === '0') {
+                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
             } else {
                 reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
             }
 
-            const documents = [];
+            let documents = [];
             reviewsQuery.forEach((doc) => {
                 documents.push({ id: doc.id, data: doc.data() });
             });

@@ -15,11 +15,13 @@ import axios from "axios";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
 function DriverProfile() {
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
+    const [userRating, setUserRating] = useState();
 
     const profileUrl = "http://localhost:3000/rider-profile?uid=";
 
@@ -42,6 +44,7 @@ function DriverProfile() {
             const response = await axios.get(`http://localhost:8000/api/get-reviews?driverUID=${driverUID}`);
             const reviews = response.data;
 
+            console.log(reviews);
             // Sort the reviews by date and time in descending order
             const sortedReviews = reviews.sort((a, b) => {
                 const dateA = a.data.reviewDate;
@@ -60,7 +63,18 @@ function DriverProfile() {
             
             console.log(descendingReviews);
             setReviews(descendingReviews);
-            // setReviews(response.data);
+
+            
+            let ratingArray = [];
+            reviews.forEach(review => {
+              ratingArray.push(review.data.reviewRating);
+            });
+            
+            let sum = ratingArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+            let avgUserRating = (sum / ratingArray.length).toFixed(2);
+
+
+            setUserRating(avgUserRating);
             
         } catch (error) {
             console.error("Error getting reviews: ", error);
@@ -89,13 +103,21 @@ function DriverProfile() {
             <div className="driver-profile-page">
                 <div className="driver-container">
                     <img className="driver-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
-                    <h2 className="driver-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                    <div className="name-rating">
+                        <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                            <StarBorderOutlinedIcon className="review-star-icon"/> 
+                        <p className="avg-user-rating">
+                            {userRating}
+                        </p>
+                    </div>
                     <h4 className="driver-car">Model: { userInfo[0]?.data.car}</h4>
                     <p className="driver-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
-                <div className="reviews">
-                    <h3 className="reviews-heading">Reviews They've Received</h3>
+                <div className="driver-reviews-container">
+                    <div className="reviews-heading-container">
+                        <h3 className="reviews-heading">Reviews They've Received</h3>
+                    </div>
                     <div className="review-button-section">
                         <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button>
                         {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />}
@@ -134,9 +156,9 @@ function DriverProfile() {
                         </Accordion>
                         ))
                     ) : (
-                        <Box className="no-reviews-msg" mt={2}>
-                            <Alert severity="info">This user currently has no reviews. Check back later for an update!</Alert>
-                        </Box>
+                        <Box className="no-reviews-container" mt={2}>
+                        <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                    </Box>
                     )}
                 </div>
             </div>

@@ -1,31 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+body {
+    font-family: 'Amiko', sans-serif;
+}
+
 .driver-profile-page {
     display: flex;
-    /* flex-direction: column; */
     flex-basis: 100%;
     flex: 1;
 }
 
 .driver-container {
-    max-width: 300px;
+    max-width: 350px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
 
 .driver-photo {
     position: relative;
-    padding-top: 5%;
-    padding-left: 5%;
+    margin-top: 5%;
+    margin-left: 5%;
     max-height: 400px;
-    height: 360px;
-    width: auto;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
 }
 
-.driver-name {
-    position: relative;
-    padding-left: 5.5%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 2em;
+.name-rating {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+        position: relative;
+        padding-left: 5.5%;
+        font-size: 2em;
+        margin: 5px 10px 5px 0px;
+        /* width: 100%; */
+    }
+
+    .review-star-icon {
+        font-size: 2em;
+        color: gray;
+    }
+
+    .avg-user-rating {
+        font-size: 1.4em;
+        text-align: center;
+        color: rgb(79, 78, 78);
+
+        /* padding-top: 2px; */
+    }
 }
 
 .driver-car {
@@ -42,26 +66,30 @@
     width: 360px;
 }
 
-.reviews {
-    margin-left: 8%;
+.driver-reviews-container {
+    margin-left: 4%;
     margin-top: 15px;
-    width: 90%;
+    width: 100%;
+    
+    .reviews-heading-container {
+        width: 90%;
+        background-color: #5ea8f8;
+        border-radius: 10px !important;
+        margin-bottom: 20px;    
 
-    .reviews-heading {
-        font-size: 2em;
-        color: #439EFF;
-        text-decoration: underline;
-        margin-bottom: 5px;
+        .reviews-heading {
+            font-size: 2em;
+            color: white;
+            /* text-decoration: underline; */
+            text-align: center;
+            padding: 0.6em 0 0.6em 0;
+        }   
     }
 }
 
 .review-title {
     text-align: center;
     padding-top: 10px;
-    font-weight: 800;
-    font-size: 18px;
-    color: #439EFF;
-    padding-left: 16px;
 }
 
 .review-date {
@@ -89,12 +117,13 @@
     font-size: 1.5em;
     padding: 5px 10px 5px 10px;
     margin-right: 5px;
+    border-radius: 10px !important;
 }
 
 .reviews-accordion {
     margin-bottom: 20px;
-    /* width: 100%; */
     max-width: 90%;
+    border-radius: 10px !important;
 }
 
 .review-expanded {
