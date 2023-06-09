@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiko&family=Lora&display=swap');
+
+body {
+    font-family: 'Amiko', sans-serif;
+}
+
 .profile-page {
     display: flex;
-    /* flex-direction: column; */
     flex-basis: 100%;
     flex: 1;
 }
@@ -13,11 +18,12 @@
 
 .user-photo {
     position: relative;
-    padding-top: 5%;
-    padding-left: 5%;
+    margin-top: 5%;
+    margin-left: 5%;
     max-height: 400px;
-    height: 400px;
-    width: auto;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
 }
 
 .user-name {
@@ -26,6 +32,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 2em;
+    width: 100%;
 }
 
 .user-car {
@@ -34,6 +41,7 @@
     margin-top: 5px;
     font-size: 1.3em;
     margin-bottom: -10px;
+    width: 100%;
 }
 
 .user-bio {
@@ -42,20 +50,49 @@
     width: 340px;
 }
 
-.reviews {
+.user-reviews-container {
     margin-left: 8%;
     margin-top: 15px;
+    width: 90%;
+    
+    .reviews-heading-container {
+        width: 90%;
+        height: 10%;
+        background-color: #5ea8f8;
+        border-radius: 10px !important;
+        margin-bottom: 20px;    
 
-    .reviews-heading {
-        font-size: 2em;
-        color: #439EFF;
-        text-decoration: underline;
+        .reviews-heading {
+            font-size: 2em;
+            color: white;
+            /* text-decoration: underline; */
+            text-align: center;
+            padding: 0.6em 0 0.6em 0;
+        }   
     }
 }
 
 .review-title {
     text-align: center;
     padding-top: 10px;
+}
+
+.review-date {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 5px;
+}
+
+.review-time {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 4px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 10px;
 }
 
 .user-rating {
@@ -70,6 +107,7 @@
 .reviews-accordion {
     margin-bottom: 20px;
     max-width: 90%;
+    border-radius: 10px !important;
 }
 
 .review-expanded {
@@ -83,4 +121,14 @@
 
 .driver-link {
     color: #000000;
+}
+
+.driver-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.encompassing-reviews-container {
+    width: 100%;
+    margin-left: 100px;
 }

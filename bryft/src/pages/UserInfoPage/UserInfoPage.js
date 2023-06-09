@@ -51,6 +51,7 @@ function UserInfoPage({ onClose, userInfo }) {
         formData.append("bio", bio);
         formData.append("userUID", userUID);
 
+        // console.log(selectedImage);
         // Send the FormData object in the POST request
         const response = await axios.post(
           "http://localhost:8000/api/update-user-profile",

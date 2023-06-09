@@ -108,8 +108,10 @@ function RiderProfile() {
                     <p className="rider-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
-                <div className="reviews">
-                    <h3 className="reviews-heading">Reviews They've Given</h3>
+                <div className="rider-reviews-container">
+                    <div className="reviews-heading-container">
+                        <h3 className="reviews-heading">Reviews They've Given</h3>
+                    </div>
                     <div className="review-button-section">
                         {/* <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button> */}
                         {/* {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />} */}
