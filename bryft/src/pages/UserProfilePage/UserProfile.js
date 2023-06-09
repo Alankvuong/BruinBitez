@@ -24,9 +24,13 @@ function UserProfile() {
     const [driverReviews, setDriverReviews] = useState([]);
     const [userRating, setUserRating] = useState();
     const [userInfo, setUserInfo] = useState([]);
+    const [ridesHistory, setRidesHistory] = useState();
+    const [riderUids, setRiderUids] = useState();
+    const [riderNames, setRiderNames] = useState();
     const [uid, setUID] = useState('');
   
     const driverProfileUrl = "http://localhost:3000/driver-profile?uid=";
+    const riderProfileUrl = "http://localhost:3000/rider-profile?uid=";
   
     useEffect(() => {
       const auth = getAuth(); // Get the Firebase Auth instance
@@ -36,6 +40,7 @@ function UserProfile() {
           setUID(riderUID);
           getReviews(riderUID);
           getUserProfileInfo(riderUID);
+          getRidesHistory(riderUID);
         }
       });
     }, []);
@@ -131,6 +136,38 @@ function UserProfile() {
         console.error("Error fetching user information.", err)
       }
     };
+
+    const getRidesHistory = async (riderUID) => {
+        let uid = riderUID;
+      
+        console.log("UID!! ", uid);
+        try {
+          const response = await axios.get(`http://localhost:8000/api/get-rides-history?uid=${uid}`);
+          const ridesHistoryData = response.data;
+          setRidesHistory(ridesHistoryData);
+          console.log("Rides History: ", ridesHistoryData);
+      
+          let riderUidsArray = [];
+          ridesHistoryData.forEach((ride) => {
+            riderUidsArray.push(...ride.data.riderUids);
+          });
+      
+          setRiderUids(riderUidsArray);
+      
+          console.log(riderUidsArray);
+          axios
+            .get('http://localhost:8000/api/get-names', { params: { uids: riderUidsArray } })
+            .then((response) => {
+              console.log("rider names", response.data);
+              setRiderNames(response.data.names);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        } catch (err) {
+          console.log("Error fetching rides history", err);
+        }
+      };
 
     return (
         <>
@@ -251,8 +288,59 @@ function UserProfile() {
                             </AccordionDetails>
                         </Accordion>
 
-
+                        <div className="accordion-container">
+                        <Accordion className="review-headings-accordion"  disableGutters={true}>
+                            <AccordionSummary className="reviews-heading-container" expandIcon={<ExpandMoreIcon />}>
+                                <h3 className="reviews-heading">Your Rides History!</h3>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="user-reviews-container">
+                                    {ridesHistory?.length > 0 ? (
+                                    ridesHistory.map((rides, i) => (
+                                    <Accordion className="user-reviews-accordion" key={i}>
+                                        <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        className="review-title"
+                                        >
+                                        <div className="review-title">
+                                            {rides.data.origin} --&gt; {rides.data.destination}
+                                        </div>
+                                        <div className="date-time">
+                                            {/* <div className="date-time-separator">|</div> */}
+                                            <div className="review-date">{rides.data.displayDateTime}</div>
+                                            {/* <div className="review-time">
+                                            {rides.data.reviewTime &&
+                                                `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
+                                                2,
+                                                "0"
+                                                )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                                            </div> */}
+                                        </div>
+                                        </AccordionSummary>
+                                        <AccordionDetails className="review-expanded">
+                                            Driver: <a href={driverProfileUrl + rides.data.driverUid} className="driver-link">{rides?.data?.driver}</a><br></br>
+                                            {/* Riders: {riderNames.map((item, index) => (
+                                                <a href={riderProfileUrl + riderUids[index]} key={index} className="driver-link">{item}, </a>
+                                             ))} */}
+                                        </AccordionDetails>
+                                        <AccordionActions>
+                                            {/* <div className="driver-info">
+                                                <a href={driverProfileUrl + rides.data.driverUID} className="driver-link">View Driver</a>
+                                            </div> */}
+                                        </AccordionActions>
+                                    </Accordion>
+                                    ))
+                                ) : (
+                                    <Box className="no-reviews-container" mt={2}>
+                                        <Alert className="no-reviews-message"severity="info">This user hasn't taken any rides. Check back later for an update!</Alert>
+                                    </Box>
+                                )}
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
                     </div>
+
+
 
                     {/* <div className="user-reviews-container">
                         <div className="reviews-heading-container">
@@ -341,6 +429,7 @@ function UserProfile() {
                             </Box>
                         )}
                     </div> */}
+                </div>
                 </div>
             </div>
         </>

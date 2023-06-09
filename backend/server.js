@@ -120,6 +120,30 @@ app.post("/api/change-spots", async (req, res) => {
     }
 });
 
+// api endpoint to get rides history 
+app.get("/api/get-rides-history", async (req, res) => {
+    console.log("Hitting /api/get-rides-history");
+    try {
+      const uid = req.query.uid;
+  
+      userRidesHistoryQuery = await getDocs(
+        query(collection(db, "rides"), where("riderUids", "array-contains", uid))
+      );
+  
+      const documents = [];
+      userRidesHistoryQuery.forEach((doc) => {
+        documents.push({ id: doc.id, data: doc.data() });
+      });
+  
+      console.log(documents);
+      res.json(documents);
+    } catch (err) {
+      console.error("Error getting rides history:", err);
+      res.sendStatus(500);
+    }
+  });
+  
+
 // api endpoint to handle user review submission
 app.post("/api/add-review", async (req, res) => {
     const userReviewsCollection = collection(db, 'user-reviews');
@@ -227,8 +251,8 @@ app.get("/api/get-reviews", async (req, res) => {
         let driverUID = req.query.driverUID;
         let riderUID = req.query.riderUID;
 
-        console.log("Driver UID: ", driverUID);
-        console.log("Rider UID: ", riderUID);
+        // console.log("Driver UID: ", driverUID);
+        // console.log("Rider UID: ", riderUID);
 
         let reviewsQuery = null;
 
