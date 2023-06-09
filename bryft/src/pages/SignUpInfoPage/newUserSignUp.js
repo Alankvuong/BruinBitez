@@ -154,6 +154,7 @@ export default function NewUserSignUp() {
                         value={bio}
                         onChange={handleBioChange}
                         className="bioContainer"
+                        maxLength={1000}
                     />
                 </div>
                 <div>
@@ -264,7 +265,7 @@ export default function NewUserSignUp() {
     };
 
     return (
-        <div style={{backgroundColor: 'rgb(248,250,253)', height:'100%', paddingTop: '1%', paddingBottom: "8%"}}>
+        <div style={{backgroundColor: 'rgb(248,250,253)', height:'100%', paddingTop: '1%', paddingBottom: "6%"}}>
             <div>
                 <div className={"bryftLogo"}>BRYFT</div>
             </div>

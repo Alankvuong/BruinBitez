@@ -1,4 +1,4 @@
-import { useContext, createContext, useEffect, useState } from 'react';
+import { useContext, createContext, useEffect, useState, } from 'react';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -34,9 +34,19 @@ export const AuthContextProvider = ({ children }) => {
       .then(async (result) => {
         // The signed-in user info.
         const { user: googleUser } = result;
+        const signInMethods = await auth.fetchSignInMethodsForEmail(googleUser.email);
 
-        const account = await getGoogleaccount(googleUser.email);
-        setUser(account.data);
+        if (signInMethods.includes("google.com")) {
+          // The user's email exists, proceed with login
+          const account = await getGoogleaccount(googleUser.email);
+
+        // const account = await getGoogleaccount(googleUser.email);
+          setUser(account.data);
+        } else {
+          // The user's email does not exist, return or show an error message
+          console.error("User's email does not exist");
+          return;
+        }
       }).catch((e) => {
         // Handle Errors here.
         const errorCode = e.code;
