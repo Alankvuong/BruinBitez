@@ -19,9 +19,11 @@ export default function RideModal() {
     destination: '',
     driver: '',
     price: '',
-    uid: '',
+    driverUid: '',
+    riderUids: [],
     numSpots: 0,
-    dateTime: ''
+    dateTime: '',
+    displayDateTime: ''
   });
 
   //tracks if user is logged in
@@ -30,19 +32,18 @@ export default function RideModal() {
   useEffect(() => {
     let name = '';
     onAuthStateChanged(auth, (currentUser) => {
-      console.log("current user", currentUser);
       setIsLoggedIn(!!currentUser);
       if (currentUser?.uid) {
-        axios.get('http://localhost:8000/api/get-name', { params: { uid: currentUser.uid } })
+        axios.get('http://localhost:8000/api/get-names', { params: { uids: [currentUser.uid] } })
           .then((response) => {
-            name = response.data.name;
-            setRideData({ ...rideData, driver: name, uid: currentUser.uid });
+            name = response.data.names[0];
+            setRideData({ ...rideData, driver: name, driverUid: currentUser.uid });
           })
           .catch((error) => {
             console.error('Error:', error);
           });
 
-        setRideData({ ...rideData, driver: name, uid: currentUser.uid });
+        setRideData({ ...rideData, driver: name, driverUid: currentUser.uid });
       } else {
         console.log("currentUser is null");
       }
@@ -64,25 +65,34 @@ export default function RideModal() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    //format departure date and time into string
-    let dateTimeStr = (dateTime.$M + 1) + '/' + dateTime.$D + '/' + dateTime.$y + " ";
+    let monthStr = dateTime.$M + 1;
+    if (monthStr < 10) {
+      monthStr = "0" + monthStr;
+    }
+
+    let dayStr = dateTime.$D;
+    if (dateTime.$D  < 10) {
+      dayStr = "0" + dayStr;
+    }
 
     let minuteStr = dateTime.$m;
     if (dateTime.$m  < 10) {
       minuteStr = "0" + minuteStr;
     }
 
-    if (dateTime.$H === 12) {
-      dateTimeStr += "12:" + minuteStr + "PM";
-    } else if (dateTime.$H === 0) {
-      dateTimeStr += "12:" + minuteStr + "AM";
-    } else if (dateTime.$H < 12) {
-      dateTimeStr += dateTime.$H + ":" + minuteStr + "AM";
-    } else {
-      dateTimeStr += (dateTime.$H - 12) + ":" + minuteStr + "PM";
-    }
+    // format date and time into Date() permitted string
+    let dateTimeStr = dateTime.$y + "-" + monthStr + "-" + dayStr + "T" + dateTime.$H + ":" + minuteStr;
+    let displayDateTimeStr = (dateTime.$M + 1) + '/' + dateTime.$D + '/' + dateTime.$y + " ";
 
-    console.log(dateTimeStr);
+    if (dateTime.$H === 12) {
+      displayDateTimeStr += "12:" + minuteStr + "PM";
+    } else if (dateTime.$H === 0) {
+      displayDateTimeStr += "12:" + minuteStr + "AM";
+    } else if (dateTime.$H < 12) {
+      displayDateTimeStr += dateTime.$H + ":" + minuteStr + "AM";
+    } else {
+      displayDateTimeStr += (dateTime.$H - 12) + ":" + minuteStr + "PM";
+    }
 
     //check that all fields of form have been filled out
     if (rideData.origin === '' || rideData.destination === '' || rideData.price === '' || rideData.departureTime === '' || rideData.numSpots === 0) {
@@ -90,7 +100,7 @@ export default function RideModal() {
       return;
     }
 
-    axios.post('http://localhost:8000/api/create-ride', {...rideData, dateTime: dateTimeStr})
+    axios.post('http://localhost:8000/api/create-ride', {...rideData, dateTime: dateTimeStr, displayDateTime: displayDateTimeStr, price: parseFloat(rideData.price).toFixed(2)})
       .then((response) => {
         console.log('Response:', response.data);
       })
@@ -114,8 +124,8 @@ export default function RideModal() {
           <form onSubmit={handleSubmit}>
             <TextField required label="Where will you be leaving from?" name="origin" value={rideData.origin} onChange={handleChange} margin="normal" fullWidth />
             <TextField required label="Where will you be heading?" name="destination" value={rideData.destination} onChange={handleChange} margin="normal" fullWidth />
-            <TextField InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }} required label="Price" name="price" value={rideData.price} onChange={handleChange} margin="normal" />
-            <TextField required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
+            <TextField InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }} required label="Price" name="price" value={rideData.price} onChange={handleChange} placeholder="34.60" margin="normal" />
+            <TextField inputProps={{min: 0}} required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DateTimePicker']}>
                 <DateTimePicker label="Departure Date and Time" value={rideData.dateTime} onChange={(newDatetime) => setDateTime(newDatetime)} disablePast />

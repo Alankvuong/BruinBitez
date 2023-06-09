@@ -84,3 +84,10 @@
 .text-container {
     margin-right: 20px;
 }
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}

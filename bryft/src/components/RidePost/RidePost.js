@@ -6,9 +6,10 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } 
 import { onAuthStateChanged } from 'firebase/auth';
 import axios from 'axios';
 
-export default function RidePost({ origin, destination, driver, price, dateTime, uid, docId, numSpots }) {
-    const driverProfileUrl = "http://localhost:3000/driver-profile?uid=" + uid;
-
+export default function RidePost({ origin, destination, driver, price, dateTime, driverUid, docId, numSpots, riderUids }) {
+    const driverProfileUrl = "http://localhost:3000/driver-profile?uid=" + driverUid;
+    const riderProfileUrl = "http://localhost:3000/rider-profile?uid=";
+    const [riders, setRiders] = useState([]);
     const [open, setOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [joinedRide, setJoinedRide] = useState(false);
@@ -28,25 +29,42 @@ export default function RidePost({ origin, destination, driver, price, dateTime,
         } else {
             onAuthStateChanged(auth, (currentUser) => {
                 setIsLoggedIn(!!currentUser);
-                if (uid === currentUser?.uid) {
+                if (driverUid === currentUser?.uid) {
                     setUserEqualsDriver(true);
                 }
             });
             setIsMounted(true);
         }
-    }, [spots, isMounted]);
+    }, [spots, isMounted, riders]);
 
     const handleOpen = () => {
+
+        if (auth.currentUser?.uid) {
+            if (riderUids.includes(auth.currentUser.uid)) {
+                setJoinedRide(true);
+                console.log("joined", joinedRide);
+            }
+        }
+
         setOpen(true);
+        console.log(riderUids);
+        axios.get('http://localhost:8000/api/get-names', { params: { uids: riderUids } })
+            .then((response) => {
+                console.log("rider names", response.data);
+                setRiders(response.data.names);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
     }
 
     const handleClose = () => {
         setOpen(false);
+        window.location.reload();
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
+    const changeSpots = () => {
         if (!joinedRide) {
             setSpots(spots - 1);
             setJoinedRide(true);
@@ -62,9 +80,43 @@ export default function RidePost({ origin, destination, driver, price, dateTime,
             .catch((error) => {
                 console.error('Error:', error);
             });
-        //setJoinedRide(true);
+    }
+
+    const handleJoin = (event) => {
+        event.preventDefault();
+
+        changeSpots();
+
+        if (auth.currentUser?.uid) {
+            axios.post('http://localhost:8000/api/join-ride', { uid: auth.currentUser.uid, docId: docId })
+                .then((response) => {
+                    console.log('Response:', response.data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
         handleClose();
-        //window.location.reload();
+    }
+
+    const handleLeave = (event) => {
+        event.preventDefault();
+
+        changeSpots();
+
+        if (auth.currentUser?.uid) {
+            axios.post('http://localhost:8000/api/leave-ride', { uid: auth.currentUser.uid, docId: docId })
+                .then((response) => {
+                    console.log('Response:', response.data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        handleClose();
+
     }
 
     return (
@@ -91,21 +143,31 @@ export default function RidePost({ origin, destination, driver, price, dateTime,
                 </CardContent>
             </Card >
             <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Ride Details: </DialogTitle>
+                <DialogContent >
+                    <div className="name-container">
+                        <a href={driverProfileUrl} className="driver-link">
+                            Driver: {driver}
+                        </a>
+                    </div>
+                    <div className="name-container">
+                        Riders:
+                        {riders.map((item, index) => (
+                            <a href={riderProfileUrl + riderUids[index]} key={index} className="driver-link">{item}</a>
+                        ))}
+                    </div>
+
+                </DialogContent>
                 {!isLoggedIn && <div className="error-message">You need to be logged in to join a ride!</div>}
-                {userEqualsDriver && <div className="error-message">You are already the driver!</div>}
-                {/* {joinedRide && <div className="error-message">You already joined this ride!</div>} */}
-                {!joinedRide ? <DialogTitle>Do you want to join this ride?</DialogTitle> : <DialogTitle>Do you want to leave this ride?</DialogTitle>}
-                {/* <DialogContent>
-                    Number of Available Spots: {spots}
-                </DialogContent> */}
+                {userEqualsDriver && <div className="error-message">You are the driver!</div>}
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    {!joinedRide ? <Button onClick={handleSubmit} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver || spots <= 0}>
-                       Join Ride
-                    </Button> : <Button onClick={handleSubmit} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver}>
-                       Leave Ride
+                    {!joinedRide ? <Button onClick={handleJoin} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver || spots <= 0}>
+                        Join Ride
+                    </Button> : <Button onClick={handleLeave} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver}>
+                        Leave Ride
                     </Button>}
                 </DialogActions>
             </Dialog>

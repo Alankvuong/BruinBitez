@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs, addDoc, setDoc, doc, updateDoc, query, where } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, addDoc, setDoc, doc, updateDoc, query, where, arrayUnion, arrayRemove } = require('firebase/firestore');
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -27,13 +27,24 @@ const firebaseStorage = getStorage(firebase);
 const uploadStorage = multer({ firebaseStorage }); // Use Firebase Storage as the destination storage
 
 
-//api endpoint to get user's name
-app.get('/api/get-name', async (req, res) => {
+//api endpoint to get names
+app.get('/api/get-names', async (req, res) => {
     try {
-        let name = '';
-        const querySnapshot = await getDocs(query(collection(db, 'users'), where('uid', '==', req.query.uid)));
-        querySnapshot.forEach((doc) => { name = doc.data().firstName + ' ' + doc.data().lastName; });
-        res.json({ name: name });
+        let names = [];
+        const usersRef = collection(db, "users");
+
+        if (req.query.uids !== undefined) {
+            for (const uid of req.query.uids) {
+                //req.query.uids.forEach(async (uid) => {
+                let queryRef = query(usersRef);
+                querySnapshot = await getDocs(query(queryRef, where('uid', '==', uid)));
+                querySnapshot.forEach((doc) => {
+                    names.push(doc.data().firstName + ' ' + doc.data().lastName);
+                });
+            };
+        }
+
+        res.json({ names: names });
     } catch (err) {
         console.error("Error submitting user information", err);
         res.sendStatus(500);
@@ -58,52 +69,6 @@ app.post('/api/create-ride', async (req, res) => {
 //api endpoint to fetch existing ride posts
 app.get('/api/get-rides', async (req, res) => {
     try {
-        // const ridesRef = collection(db, 'rides');
-        // const ridesSnapshot = await getDocs(ridesRef);
-        // const allOrigins = []; //store origins of all rides
-        // const allDestinations = []; //store destinations of all rides
-
-        // ridesSnapshot.forEach((doc) => {
-        //     // add all values to arrays
-        //     allOrigins.push(doc.data().origin);
-        //     allDestinations.push(doc.data().destinations);
-        // });
-        
-        // let originParams = [];
-
-        // Object.entries(req.query).forEach(([field, value]) => {
-        //     if (field === 'origin' && value !== '') {
-        //         allOrigins.forEach((origin) => {
-        //             //add doc to query if search param is in the origin string
-        //             if (origin.toLowerCase().includes(value)) {
-        //                 originParams.push(origin);
-        //             }
-        //         });
-        //     }
-        // })
-        // //create empty copy of params
-        // let copyParams = req.query;
-        // for (let key in copyParams) {
-        //     copyParams[key] = [];
-        // }
-        
-        // copyParams.origin = originParams;
-        // console.log(copyParams);
-
-        // // query the fetchedArrays for the search params
-        // let queryRef = query(ridesRef);
-        // Object.entries(copyParams).forEach(([field, values]) => {
-        //     if (req.query.field !== '' && values.length !== 0) {
-        //         values.forEach((value) => {
-        //             queryRef = query(queryRef, where(field, '==', value));
-        //         });
-        //     }
-        // });
-        // console.log("queryRef", queryRef);
-        // const querySnapshot = await getDocs(queryRef);
-        // const documents = querySnapshot.docs.map((doc) => doc.data());
-        // res.json(documents);
-
         const ridesRef = collection(db, 'rides');
         let queryRef = query(ridesRef);
 
@@ -122,26 +87,48 @@ app.get('/api/get-rides', async (req, res) => {
     }
 })
 
+//api endpoint to join a ride
+app.post("/api/join-ride", async (req, res) => {
+    try {
+        const rideDocRef = doc(collection(db, 'rides'), req.body.docId);
+        await updateDoc(rideDocRef, { riderUids: arrayUnion(req.body.uid) });
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+})
+
+//api endpoint to leave a ride
+app.post("/api/leave-ride", async (req, res) => {
+    try {
+        const rideDocRef = doc(collection(db, 'rides'), req.body.docId);
+        await updateDoc(rideDocRef, { riderUids: arrayRemove(req.body.uid) });
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(500);
+    }
+})
+
 //api endpoint to change number of available spots in the ride
 app.post("/api/change-spots", async (req, res) => {
     try {
-        const rideDocRef = doc(collection(db, 'rides'), req.body.docId );
+        const rideDocRef = doc(collection(db, 'rides'), req.body.docId);
         await updateDoc(rideDocRef, { numSpots: req.body.numSpots });
         res.sendStatus(200);
     } catch (error) {
         res.sendStatus(500);
     }
-  });
+});
 
 // api endpoint to handle user review submission
 app.post("/api/add-review", async (req, res) => {
     const userReviewsCollection = collection(db, 'user-reviews');
     try {
-        const {reviewDate, reviewTime, reviewTitle, reviewMessage, reviewRating, riderUID, driverUID} = req.body;
+        const { reviewDate, reviewTime, reviewTitle, reviewMessage, reviewRating, riderUID, driverUID } = req.body;
 
         console.log(req.body);
         const newDocRef = doc(collection(db, 'user-reviews'));
-        
+
         await setDoc(newDocRef, {
             reviewDate,
             reviewTime,
@@ -158,20 +145,20 @@ app.post("/api/add-review", async (req, res) => {
         console.error("Error submitting user information", err);
         res.sendStatus(500);
     }
-  });
+});
 
 async function getDocumentIdFromUid(uid) {
     const usersCollectionRef = collection(db, "users");
     const q = query(usersCollectionRef, where("uid", "==", uid));
-  
+
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
-      const documentId = querySnapshot.docs[0].id;
-      return documentId;
+        const documentId = querySnapshot.docs[0].id;
+        return documentId;
     } else {
-      return null; // No document found with the given UID
+        return null; // No document found with the given UID
     }
-  }
+}
 
 // POST route for updating user profile
 app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, res) => {
@@ -200,7 +187,7 @@ app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, r
                         // Upload the file to Firebase Storage
                         const storageRef = ref(firebaseStorage, `images/${userUID}/${selectedImage.originalname}`);
                         await uploadBytes(storageRef, selectedImage.buffer);
-        
+
                         // Get the download URL of the uploaded file
                         const downloadURL = await getDownloadURL(storageRef);
 
@@ -233,53 +220,53 @@ app.post('/api/update-user-profile', uploadStorage.single('file'), async (req, r
         res.sendStatus(500);
     }
 });
-  
-    app.get("/api/get-reviews", async (req, res) => {
-        console.log("Hitting /api/get-reviews");
-        try {
-            let driverUID = req.query.driverUID;
-            let riderUID = req.query.riderUID;
 
-            console.log("Driver UID: ", driverUID);
-            console.log("Rider UID: ", riderUID);
+app.get("/api/get-reviews", async (req, res) => {
+    console.log("Hitting /api/get-reviews");
+    try {
+        let driverUID = req.query.driverUID;
+        let riderUID = req.query.riderUID;
 
-            let reviewsQuery = null;
+        console.log("Driver UID: ", driverUID);
+        console.log("Rider UID: ", riderUID);
 
-            if(driverUID === '0') {
-                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('riderUID', '==', riderUID)));
-            } else if (riderUID === '0') {
-                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
-            } else {
-                reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
-            }
+        let reviewsQuery = null;
 
-            let documents = [];
-            reviewsQuery.forEach((doc) => {
-                documents.push({ id: doc.id, data: doc.data() });
-            });
-
-            res.json(documents);
-        } catch (error) {
-            console.log("Error getting documents", error);
-            res.status(500).json({ error: "Failed to retrieve documents" });
+        if (driverUID === '0') {
+            reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('riderUID', '==', riderUID)));
+        } else if (riderUID === '0') {
+            reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
+        } else {
+            reviewsQuery = await getDocs(query(collection(db, 'user-reviews'), where('driverUID', '==', driverUID)));
         }
-    });
 
-    app.get("/api/get-user-profile", async (req, res) => {
-        try {
-            const uid = req.query.uid;
+        let documents = [];
+        reviewsQuery.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+        });
 
-            userInfoQuery = await getDocs(query(collection(db, 'users'), where('uid', '==', uid)));
-            const documents = [];
-            userInfoQuery.forEach((doc) => {
-                documents.push({ id: doc.id, data: doc.data() });
-            });
+        res.json(documents);
+    } catch (error) {
+        console.log("Error getting documents", error);
+        res.status(500).json({ error: "Failed to retrieve documents" });
+    }
+});
 
-            res.json(documents);
-        } catch (err) {
-            console.error("Error getting documents: ", error);
-        }
-    })
+app.get("/api/get-user-profile", async (req, res) => {
+    try {
+        const uid = req.query.uid;
+
+        userInfoQuery = await getDocs(query(collection(db, 'users'), where('uid', '==', uid)));
+        const documents = [];
+        userInfoQuery.forEach((doc) => {
+            documents.push({ id: doc.id, data: doc.data() });
+        });
+
+        res.json(documents);
+    } catch (err) {
+        console.error("Error getting documents: ", error);
+    }
+})
 
 app.listen(8000, () => {
     console.log('Backend server is running on http://localhost:8000');
