@@ -16,11 +16,13 @@ import axios from "axios";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
 function UserProfile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [riderReviews, setRiderReviews] = useState([]);
     const [driverReviews, setDriverReviews] = useState([]);
+    const [userRating, setUserRating] = useState();
     const [userInfo, setUserInfo] = useState([]);
     const [uid, setUID] = useState('');
   
@@ -73,6 +75,17 @@ function UserProfile() {
     
             setRiderReviews(descendingReviews);
             console.log(descendingReviews);
+
+            let ratingArray = [];
+            reviews.forEach(review => {
+              ratingArray.push(review.data.reviewRating);
+            });
+            
+            let sum = ratingArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+            let avgUserRating = (sum / ratingArray.length).toFixed(2);
+
+
+            setUserRating(avgUserRating);
         } catch (error) {
             console.error("Error getting reviews: ", error);
         }
@@ -125,7 +138,13 @@ function UserProfile() {
             <div className="profile-page">
                 <div className="user-container">
                     <img className="user-photo" src={ userInfo && userInfo !== undefined? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
-                    <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                    <div className="name-rating">
+                        <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                            <StarBorderOutlinedIcon className="review-star-icon"/> 
+                        <p className="avg-user-rating">
+                            {userRating}
+                        </p>
+                    </div>
                     <h4 className="user-car">Model: { userInfo[0]?.data.car}</h4>
                     <p className="user-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                     <button onClick={handleOpenModal}>Edit Profile</button>
@@ -172,8 +191,8 @@ function UserProfile() {
                             </Accordion>
                             ))
                         ) : (
-                            <Box mt={2}>
-                                <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            <Box className="no-reviews-container" mt={2}>
+                                <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                             </Box>
                         )}
                     </div>
@@ -216,8 +235,8 @@ function UserProfile() {
                             </Accordion>
                             ))
                         ) : (
-                            <Box mt={2}>
-                                <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            <Box className="no-reviews-container" mt={2}>
+                                <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                             </Box>
                         )}
                     </div>

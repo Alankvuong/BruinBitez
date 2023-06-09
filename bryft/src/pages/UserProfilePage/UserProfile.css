@@ -11,7 +11,7 @@ body {
 }
 
 .user-container {
-    max-width: 300px;
+    max-width: 350px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
@@ -26,19 +26,36 @@ body {
     border-radius: 10px;
 }
 
-.user-name {
-    position: relative;
-    padding-left: 5.5%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 2em;
-    width: 100%;
+.name-rating {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+        position: relative;
+        padding-left: 5.5%;
+        font-size: 2em;
+        margin: 5px 10px 5px 0px;
+        /* width: 100%; */
+    }
+
+    .review-star-icon {
+        font-size: 2em;
+        color: gray;
+    }
+
+    .avg-user-rating {
+        font-size: 1.4em;
+        text-align: center;
+        color: rgb(79, 78, 78);
+
+        /* padding-top: 2px; */
+    }
 }
 
 .user-car {
     position: relative;
     padding-left: 5.5%;
-    margin-top: 5px;
+    margin-top: -2px;
     font-size: 1.3em;
     margin-bottom: -10px;
     width: 100%;
@@ -47,13 +64,13 @@ body {
 .user-bio {
     position: relative;
     padding-left: 5.5%;
-    width: 340px;
+    width: 360px;
 }
 
 .user-reviews-container {
-    margin-left: 8%;
+    margin-left: 4%;
     margin-top: 15px;
-    width: 90%;
+    max-width: 100%;
     
     .reviews-heading-container {
         width: 90%;
@@ -102,11 +119,12 @@ body {
     font-size: 1.5em;
     padding: 5px 10px 5px 10px;
     margin-right: 5px;
+    border-radius: 10px !important;
 }
 
 .reviews-accordion {
     margin-bottom: 20px;
-    max-width: 90%;
+    max-width: 100%;
     border-radius: 10px !important;
 }
 
@@ -114,9 +132,12 @@ body {
     /* background-color: #b7ddfc;  */
 }
 
+.no-reviews-container {
+    width: 100%;
+}
+
 .no-reviews-message {
     height: 100px;
-    width: 90%;
 }
 
 .driver-link {
@@ -129,6 +150,6 @@ body {
 }
 
 .encompassing-reviews-container {
-    width: 100%;
+    width: 90%;
     margin-left: 100px;
 }

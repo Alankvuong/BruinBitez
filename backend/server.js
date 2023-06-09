@@ -58,10 +58,63 @@ app.post('/api/create-ride', async (req, res) => {
 //api endpoint to fetch existing ride posts
 app.get('/api/get-rides', async (req, res) => {
     try {
-        const collectionRef = collection(db, 'rides');
-        const querySnapshot = await getDocs(collectionRef);
-        const documents = querySnapshot.docs.map((doc) => doc.data());
+        // const ridesRef = collection(db, 'rides');
+        // const ridesSnapshot = await getDocs(ridesRef);
+        // const allOrigins = []; //store origins of all rides
+        // const allDestinations = []; //store destinations of all rides
+
+        // ridesSnapshot.forEach((doc) => {
+        //     // add all values to arrays
+        //     allOrigins.push(doc.data().origin);
+        //     allDestinations.push(doc.data().destinations);
+        // });
         
+        // let originParams = [];
+
+        // Object.entries(req.query).forEach(([field, value]) => {
+        //     if (field === 'origin' && value !== '') {
+        //         allOrigins.forEach((origin) => {
+        //             //add doc to query if search param is in the origin string
+        //             if (origin.toLowerCase().includes(value)) {
+        //                 originParams.push(origin);
+        //             }
+        //         });
+        //     }
+        // })
+        // //create empty copy of params
+        // let copyParams = req.query;
+        // for (let key in copyParams) {
+        //     copyParams[key] = [];
+        // }
+        
+        // copyParams.origin = originParams;
+        // console.log(copyParams);
+
+        // // query the fetchedArrays for the search params
+        // let queryRef = query(ridesRef);
+        // Object.entries(copyParams).forEach(([field, values]) => {
+        //     if (req.query.field !== '' && values.length !== 0) {
+        //         values.forEach((value) => {
+        //             queryRef = query(queryRef, where(field, '==', value));
+        //         });
+        //     }
+        // });
+        // console.log("queryRef", queryRef);
+        // const querySnapshot = await getDocs(queryRef);
+        // const documents = querySnapshot.docs.map((doc) => doc.data());
+        // res.json(documents);
+
+        const ridesRef = collection(db, 'rides');
+        let queryRef = query(ridesRef);
+
+        Object.entries(req.query).forEach(([field, value]) => {
+            if (value !== '') {
+                queryRef = query(queryRef, where(field, '==', value));
+            }
+        });
+
+        const querySnapshot = await getDocs(queryRef);
+        const documents = querySnapshot.docs.map((doc) => doc.data());
         res.json(documents);
     } catch (err) {
         console.error("Error submitting user information", err);

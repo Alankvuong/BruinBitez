@@ -6,7 +6,7 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } 
 import { onAuthStateChanged } from 'firebase/auth';
 import axios from 'axios';
 
-export default function RidePost({ origin, destination, driver, price, departureTime, uid, docId, numSpots }) {
+export default function RidePost({ origin, destination, driver, price, dateTime, uid, docId, numSpots }) {
     const driverProfileUrl = "http://localhost:3000/driver-profile?uid=" + uid;
 
     const [open, setOpen] = useState(false);
@@ -81,11 +81,11 @@ export default function RidePost({ origin, destination, driver, price, departure
                             </a>
                         </Grid>
                         <Grid item className="bottom-left">
-                            <span className='text-container'> Price: {price} </span>
+                            <span className='text-container'> Price: ${price} </span>
                             {spots > 0 ? <span className='text-container'> Spots Left: {spots} </span> : <span className='text-container error-message'> This ride is full! </span>}
                         </Grid>
                         <Grid item className="bottom-right">
-                            Departure Time: {departureTime}
+                            Departing: {dateTime}
                         </Grid>
                     </Grid>
                 </CardContent>

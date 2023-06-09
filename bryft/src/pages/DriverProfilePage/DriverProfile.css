@@ -6,13 +6,12 @@ body {
 
 .driver-profile-page {
     display: flex;
-    /* flex-direction: column; */
     flex-basis: 100%;
     flex: 1;
 }
 
 .driver-container {
-    max-width: 300px;
+    max-width: 350px;
     margin-left: 40px;
     margin-top: 2.5%;
 }
@@ -27,13 +26,30 @@ body {
     border-radius: 10px;
 }
 
-.driver-name {
-    position: relative;
-    padding-left: 5.5%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 2em;
-    width: 100%;
+.name-rating {
+    display: flex;
+    align-items: center;
+
+    .user-name {
+        position: relative;
+        padding-left: 5.5%;
+        font-size: 2em;
+        margin: 5px 10px 5px 0px;
+        /* width: 100%; */
+    }
+
+    .review-star-icon {
+        font-size: 2em;
+        color: gray;
+    }
+
+    .avg-user-rating {
+        font-size: 1.4em;
+        text-align: center;
+        color: rgb(79, 78, 78);
+
+        /* padding-top: 2px; */
+    }
 }
 
 .driver-car {
@@ -51,13 +67,12 @@ body {
 }
 
 .driver-reviews-container {
-    margin-left: 8%;
+    margin-left: 4%;
     margin-top: 15px;
-    width: 90%;
+    width: 100%;
     
     .reviews-heading-container {
         width: 90%;
-        height: 20%;
         background-color: #5ea8f8;
         border-radius: 10px !important;
         margin-bottom: 20px;    
@@ -67,7 +82,7 @@ body {
             color: white;
             /* text-decoration: underline; */
             text-align: center;
-            padding-top: 0.8em;
+            padding: 0.6em 0 0.6em 0;
         }   
     }
 }
@@ -75,10 +90,6 @@ body {
 .review-title {
     text-align: center;
     padding-top: 10px;
-    font-weight: 800;
-    font-size: 18px;
-    color: #439EFF;
-    padding-left: 16px;
 }
 
 .review-date {
@@ -106,6 +117,7 @@ body {
     font-size: 1.5em;
     padding: 5px 10px 5px 10px;
     margin-right: 5px;
+    border-radius: 10px !important;
 }
 
 .reviews-accordion {
