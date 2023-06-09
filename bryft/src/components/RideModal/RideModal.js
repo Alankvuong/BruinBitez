@@ -19,7 +19,8 @@ export default function RideModal() {
     destination: '',
     driver: '',
     price: '',
-    uid: '',
+    driverUid: '',
+    riderUids: [],
     numSpots: 0,
     dateTime: '',
     displayDateTime: ''
@@ -31,19 +32,18 @@ export default function RideModal() {
   useEffect(() => {
     let name = '';
     onAuthStateChanged(auth, (currentUser) => {
-      console.log("current user", currentUser);
       setIsLoggedIn(!!currentUser);
       if (currentUser?.uid) {
-        axios.get('http://localhost:8000/api/get-name', { params: { uid: currentUser.uid } })
+        axios.get('http://localhost:8000/api/get-names', { params: { uids: [currentUser.uid] } })
           .then((response) => {
-            name = response.data.name;
-            setRideData({ ...rideData, driver: name, uid: currentUser.uid });
+            name = response.data.names[0];
+            setRideData({ ...rideData, driver: name, driverUid: currentUser.uid });
           })
           .catch((error) => {
             console.error('Error:', error);
           });
 
-        setRideData({ ...rideData, driver: name, uid: currentUser.uid });
+        setRideData({ ...rideData, driver: name, driverUid: currentUser.uid });
       } else {
         console.log("currentUser is null");
       }
@@ -93,8 +93,6 @@ export default function RideModal() {
     } else {
       displayDateTimeStr += (dateTime.$H - 12) + ":" + minuteStr + "PM";
     }
-
-    console.log(displayDateTimeStr);
 
     //check that all fields of form have been filled out
     if (rideData.origin === '' || rideData.destination === '' || rideData.price === '' || rideData.departureTime === '' || rideData.numSpots === 0) {
