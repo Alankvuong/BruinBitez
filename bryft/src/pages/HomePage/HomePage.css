@@ -313,32 +313,3 @@ a {
     font-size: 14px;
     width: 80%;
 }
-
-.logo {
-    float: left;
-    color: #111111;
-    font-size: 1.5rem;
-    text-decoration: none;
-    font-family: 'Amiko', sans-serif;
-    letter-spacing: 2px;
-    margin-left: 35px;
-    margin-right: 15px;
-}
-
-.bottomtext {
-    float: left;
-    font-size: 14px;
-    font-family: 'Amiko';
-    margin: 8px;
-}
-
-.bottom {
-    width: fill;
-    position: static;
-    background-color:rgb(25, 25, 25);
-    color: white;
-    height: 20px;
-    z-index: 5;
-    float: left;
-    padding: 30px;
-}
