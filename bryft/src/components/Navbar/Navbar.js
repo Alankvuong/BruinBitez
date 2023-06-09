@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Modal from 'react-modal';
+import { Link, useNavigate } from "react-router-dom";
+import {UserAuth} from '../../context/AuthContext'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from '../../firebase'
 import "./Navbar.css";
 
 function Navbar() {

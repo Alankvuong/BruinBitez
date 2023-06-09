@@ -1,0 +1,131 @@
+.rider-profile-page {
+    display: flex;
+    /* flex-direction: column; */
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.rider-container {
+    max-width: 300px;
+    margin-left: 40px;
+    margin-top: 2.5%;
+}
+
+.rider-photo {
+    position: relative;
+    padding-top: 5%;
+    padding-left: 5%;
+    max-height: 400px;
+    height: 360px;
+    width: auto;
+}
+
+.rider-name {
+    position: relative;
+    padding-left: 5.5%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+.rider-car {
+    position: relative;
+    padding-left: 5.5%;
+    margin-top: 5px;
+    font-size: 1.3em;
+    margin-bottom: -10px;
+}
+
+.rider-bio {
+    position: relative;
+    padding-left: 5.5%;
+    width: 360px;
+}
+
+.reviews {
+    margin-left: 8%;
+    margin-top: 15px;
+    width: 90%;
+
+    .reviews-heading {
+        font-size: 2em;
+        color: #439EFF;
+        text-decoration: underline;
+        margin-bottom: 5px;
+    }
+}
+
+.review-title {
+    text-align: center;
+    padding-top: 10px;
+    font-weight: 800;
+    font-size: 18px;
+    color: #439EFF;
+    padding-left: 16px;
+}
+
+.review-date {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 5px;
+}
+
+.review-time {
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 4px;
+    font-size: 14px;
+    color: #7B7B7B;
+    padding-right: 10px;
+}
+
+.rider-rating {
+    background-color:#439EFF;
+    color: white;
+    font-weight: 400;
+    font-size: 1.5em;
+    padding: 5px 10px 5px 10px;
+    margin-right: 5px;
+}
+
+.reviews-accordion {
+    margin-bottom: 20px;
+    /* width: 100%; */
+    max-width: 90%;
+}
+
+.review-expanded {
+    /* background-color: #b7ddfc;  */
+}
+
+.review-button-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10%;
+    margin-bottom: 10px;
+}
+
+.date-time {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2px;
+}
+
+.date-time-separator {
+    color: #7B7B7B;
+    margin-top: 6px;
+    font-weight: 600;
+
+}
+
+.driver-link{
+    color: #000000;
+}
+
+.driver-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

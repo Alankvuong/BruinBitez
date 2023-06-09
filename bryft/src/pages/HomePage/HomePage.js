@@ -101,9 +101,6 @@ function HomePage() {
                             <div className="additionalinfo"></div>
                             <div className="additionalinfotext">Get back to the place you call home.</div>
                         </div>
-                        <div className="footercontainer">
-                            <div className="footerheading">Get back to the place you call home.</div>
-                        </div>
                         <div className="bottom">
                             <div className="logo">
                                 <Link to="/">BRYFT</Link>

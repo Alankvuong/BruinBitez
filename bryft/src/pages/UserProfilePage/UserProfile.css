@@ -1,0 +1,86 @@
+.profile-page {
+    display: flex;
+    /* flex-direction: column; */
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.user-container {
+    max-width: 300px;
+    margin-left: 40px;
+    margin-top: 2.5%;
+}
+
+.user-photo {
+    position: relative;
+    padding-top: 5%;
+    padding-left: 5%;
+    max-height: 400px;
+    height: 400px;
+    width: auto;
+}
+
+.user-name {
+    position: relative;
+    padding-left: 5.5%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+.user-car {
+    position: relative;
+    padding-left: 5.5%;
+    margin-top: 5px;
+    font-size: 1.3em;
+    margin-bottom: -10px;
+}
+
+.user-bio {
+    position: relative;
+    padding-left: 5.5%;
+    width: 340px;
+}
+
+.reviews {
+    margin-left: 8%;
+    margin-top: 15px;
+
+    .reviews-heading {
+        font-size: 2em;
+        color: #439EFF;
+        text-decoration: underline;
+    }
+}
+
+.review-title {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.user-rating {
+    background-color:#439EFF;
+    color: white;
+    font-weight: 400;
+    font-size: 1.5em;
+    padding: 5px 10px 5px 10px;
+    margin-right: 5px;
+}
+
+.reviews-accordion {
+    margin-bottom: 20px;
+    max-width: 90%;
+}
+
+.review-expanded {
+    /* background-color: #b7ddfc;  */
+}
+
+.no-reviews-message {
+    height: 100px;
+    width: 90%;
+}
+
+.driver-link {
+    color: #000000;
+}

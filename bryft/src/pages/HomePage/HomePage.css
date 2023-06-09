@@ -16,7 +16,7 @@
     text-align: center;
 }
 
-h2 {
+.h2-headings {
     position: absolute;
     top: 45%;
     height: auto;
@@ -32,7 +32,7 @@ h2 {
     color: #565656;
 }
 
-p {
+.p-tags {
     position: absolute;
     top: 60%;
     width: 85%;
