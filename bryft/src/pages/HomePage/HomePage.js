@@ -1,6 +1,7 @@
 import "./HomePage.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import backdrop from './backdrop-royce.png';
 import icon1 from './icon-computer.png';
 import icon2 from './icon-students.png';
@@ -45,7 +46,7 @@ function HomePage() {
     }
 
     return (
-        <React.Fragment>
+        <>
             <main>
                 <Navbar />
                 <div className="bodycontainer">
@@ -105,15 +106,12 @@ function HomePage() {
                             <div className="logo">
                                 <Link to="/">BRYFT</Link>
                             </div>
-                            <div className="bottomtext">
-                                TM &amp; Copyright 2023 Bryft.
-                                All Rights Reserved.
-                            </div>
                         </div>
                     </div>
                 </div>
+                <Footer />
             </main>
-        </React.Fragment>
+        </>
     )
 }
 
