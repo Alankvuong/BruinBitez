@@ -43,7 +43,7 @@ textarea {
     height: 200px;
 }
 
-button {
+#button {
     background: #438EFF;
     color: white;
     font-family: 'Amiko', sans-serif;

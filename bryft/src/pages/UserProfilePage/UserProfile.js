@@ -147,19 +147,120 @@ function UserProfile() {
                     </div>
                     <h4 className="user-car">Model: { userInfo[0]?.data.car}</h4>
                     <p className="user-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
-                    <button onClick={handleOpenModal}>Edit Profile</button>
+                    <button className="edit-profile-btn" onClick={handleOpenModal}>Edit Profile</button>
                     {isModalOpen && <UserInfoPage onClose={handleCloseModal} userInfo={userInfo} />}
                 </div>
 
                 <div className="encompassing-reviews-container">
+                    <div className="accordion-container">
+                        <Accordion className="review-headings-accordion"  disableGutters={true}>
+                            <AccordionSummary className="reviews-heading-container" expandIcon={<ExpandMoreIcon />}>
+                                <h3 className="reviews-heading">Reviews You've Wrote!</h3>
+                                {/* <h3>Reviews You've Wrote!</h3> */}
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="user-reviews-container">
+                                    {riderReviews.length > 0 ? (
+                                    riderReviews.map((review, i) => (
+                                    <Accordion className="user-reviews-accordion" key={i}>
+                                        <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        className="review-title"
+                                        >
+                                        <div className="user-rating">
+                                            {review.data.reviewRating.toFixed(1)}
+                                        </div>
+                                        <div className="review-title">{review.data.reviewTitle}</div>
+                                        <div className="date-time">
+                                            <div className="review-date">{review.data.reviewDate}</div>
+                                            <div className="date-time-separator">|</div>
+                                            <div className="review-time">
+                                            {review.data.reviewTime &&
+                                                `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
+                                                2,
+                                                "0"
+                                                )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                                            </div>
+                                        </div>
+                                        </AccordionSummary>
+                                        <AccordionDetails className="review-expanded">
+                                        {review.data.reviewMessage}
+                                        </AccordionDetails>
+                                        <AccordionActions>
+                                            <div className="driver-info">
+                                                <a href={driverProfileUrl + review.data.driverUID} className="driver-link">View Driver</a>
+                                            </div>
+                                        </AccordionActions>
+                                    </Accordion>
+                                    ))
+                                ) : (
+                                    <Box className="no-reviews-container" mt={2}>
+                                        <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                                    </Box>
+                                )}
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
 
-                    <div className="user-reviews-container">
+                        <Accordion className="review-headings-accordion"  disableGutters={true}>
+                            <AccordionSummary className="reviews-heading-container" expandIcon={<ExpandMoreIcon />}>
+                                <h3 className="reviews-heading">Reviews You've Received!</h3>
+                                {/* <h3>Reviews You've Wrote!</h3> */}
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="user-reviews-container">
+                                {driverReviews.length > 0 ? (
+                                    driverReviews.map((review, i) => (
+                                    <Accordion className="user-reviews-accordion" key={i}>
+                                        <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        className="review-title"
+                                        >
+                                        <div className="user-rating">
+                                            {review.data.reviewRating.toFixed(1)}
+                                        </div>
+                                        <div className="review-title">{review.data.reviewTitle}</div>
+                                        <div className="date-time">
+                                            <div className="review-date">{review.data.reviewDate}</div>
+                                            <div className="date-time-separator">|</div>
+                                            <div className="review-time">
+                                            {review.data.reviewTime &&
+                                                `${review.data.reviewTime.split(":")[0]}:${review.data.reviewTime.split(":")[1].padStart(
+                                                2,
+                                                "0"
+                                                )} ${Number(review.data.reviewTime.split(":")[0]) < 12 ? "am" : "pm"}`}
+                                            </div>
+                                        </div>
+                                        </AccordionSummary>
+                                        <AccordionDetails className="review-expanded">
+                                        {review.data.reviewMessage}
+                                        </AccordionDetails>
+                                        <AccordionActions>
+                                            <div className="driver-info">
+                                                <a href={driverProfileUrl + review.data.riderUID} className="driver-link">View Rider</a>
+                                            </div>
+                                        </AccordionActions>
+                                    </Accordion>
+                                    ))
+                                ) : (
+                                    <Box className="no-reviews-container" mt={2}>
+                                        <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                                    </Box>
+                                )}
+                            </div>
+                            </AccordionDetails>
+                        </Accordion>
+
+
+                    </div>
+
+                    {/* <div className="user-reviews-container">
                         <div className="reviews-heading-container">
                             <h3 className="reviews-heading">Reviews You've Wrote!</h3>
                         </div>
                         {riderReviews.length > 0 ? (
                             riderReviews.map((review, i) => (
-                            <Accordion className="reviews-accordion" key={i}>
+                            <Accordion className="user-reviews-accordion" key={i}>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 className="review-title"
@@ -195,15 +296,15 @@ function UserProfile() {
                                 <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                             </Box>
                         )}
-                    </div>
+                    </div> */}
 
-                    <div className="user-reviews-container">
+                    {/* <div className="user-reviews-container">
                         <div className="reviews-heading-container">
                             <h3 className="reviews-heading">Reviews You've Received!</h3>
                         </div>
                         {driverReviews.length > 0 ? (
                             driverReviews.map((review, i) => (
-                            <Accordion className="reviews-accordion" key={i}>
+                            <Accordion className="user-reviews-accordion" key={i}>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 className="review-title"
@@ -239,7 +340,7 @@ function UserProfile() {
                                 <Alert className="no-reviews-message"severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                             </Box>
                         )}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

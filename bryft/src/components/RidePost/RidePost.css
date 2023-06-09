@@ -13,6 +13,8 @@
 
 .ride-card:hover {
     transform: scale(1.02);
+    border: 2px solid #2D92FF;
+
 }
 
 .ride-card-content {

@@ -5,5 +5,6 @@
 }
 
 .create-ride-post-btn {
-    margin-right: 8em;
+    margin-right: 3em !important;
+    background-color: #5ea8f8 !important;
 }

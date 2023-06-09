@@ -67,8 +67,18 @@ body {
     width: 360px;
 }
 
+.edit-profile-btn {
+    background: #438EFF;
+    color: white;
+    font-family: 'Amiko', sans-serif;
+    border: 0;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+}
 .user-reviews-container {
-    margin-left: 4%;
+    /* margin-left: 4%; */
     margin-top: 15px;
     max-width: 100%;
     
@@ -91,7 +101,7 @@ body {
 
 .review-title {
     text-align: center;
-    padding-top: 10px;
+    /* padding-top: 10px; */
 }
 
 .review-date {
@@ -122,8 +132,9 @@ body {
     border-radius: 10px !important;
 }
 
-.reviews-accordion {
+.user-reviews-accordion {
     margin-bottom: 20px;
+    width: 100%;
     max-width: 100%;
     border-radius: 10px !important;
 }
@@ -150,6 +161,37 @@ body {
 }
 
 .encompassing-reviews-container {
-    width: 90%;
+    max-width: 90%;
     margin-left: 100px;
+    margin-top: 4%;
+
+    .accordion-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.review-headings-accordion {
+    width: 90%;
+    max-width: 90%;
+    border-radius: 10px !important;
+    margin-bottom: 100px;
+
+
+    .reviews-heading-container {
+        width: 100%;
+        height: 100%;
+        background-color: #5ea8f8;
+        border-radius: 10px !important;
+        margin: 0px;
+        /* margin-bottom: 20px;     */
+
+        .reviews-heading {
+            font-size: 2em;
+            color: white;
+            /* text-decoration: underline; */
+            text-align: center;
+            /* padding: 0.6em 0 0.6em 0; */
+        }   
+    }
 }

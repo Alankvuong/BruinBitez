@@ -113,7 +113,8 @@ export default function RideModal() {
   };
 
   return (
-    <div>
+    <>
+    
       <Button className="create-ride-post-btn" variant="contained" color="primary" onClick={handleOpen}>
         Create Ride Post
       </Button>
@@ -142,7 +143,7 @@ export default function RideModal() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 
