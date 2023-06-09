@@ -71,7 +71,7 @@ export default function RideModal() {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button className="create-ride-post-btn" variant="contained" color="primary" onClick={handleOpen}>
         Create Ride Post
       </Button>
       <Dialog open={open} onClose={handleClose}>

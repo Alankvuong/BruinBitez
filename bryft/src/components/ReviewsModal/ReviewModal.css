@@ -34,4 +34,5 @@
 .close-icon {
     display: flex;
     left: 94%;
+    box-shadow: none;
 }
