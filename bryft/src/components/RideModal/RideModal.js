@@ -127,7 +127,7 @@ export default function RideModal() {
             <TextField required label="Where will you be leaving from?" name="origin" value={rideData.origin} onChange={handleChange} margin="normal" fullWidth />
             <TextField required label="Where will you be heading?" name="destination" value={rideData.destination} onChange={handleChange} margin="normal" fullWidth />
             <TextField InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }} required label="Price" name="price" value={rideData.price} onChange={handleChange} placeholder="34.60" margin="normal" />
-            <TextField required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
+            <TextField inputProps={{min: 0}} required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DateTimePicker']}>
                 <DateTimePicker label="Departure Date and Time" value={rideData.dateTime} onChange={(newDatetime) => setDateTime(newDatetime)} disablePast />
