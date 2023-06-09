@@ -171,6 +171,17 @@ body {
     }
 }
 
+.rides-history-container {
+    max-width: 90%;
+    margin-left: 100px;
+    margin-top: 4%;
+
+    .accordion-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .review-headings-accordion {
     width: 90%;
     max-width: 90%;
