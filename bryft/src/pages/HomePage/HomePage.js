@@ -1,4 +1,3 @@
-import "./HomePage.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -6,13 +5,18 @@ import backdrop from './backdrop-royce.png';
 import icon1 from './icon-computer.png';
 import icon2 from './icon-students.png';
 import icon3 from './icon-money.png';
+import ComputerIcon from '@mui/icons-material/Computer';
 import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import GroupOfPeople from "../../assets/group-of-people.svg";
+import Money from "../../assets/money.svg"
+import JansSteps from "./janns.jpeg";
 
 function SignedIn() {
+    require("./HomePage.css");
     return (
-        <div className="logincontainer">
-            <div className="logintext2">
+        <div className="login-container">
+            <div className="login-banner-text">
                     New to Bryft? <Link to="/sign-up-info" className="signuplink">
                     Sign up!
                 </Link>
@@ -49,17 +53,17 @@ function HomePage() {
         <>
             <main>
                 <Navbar />
-                <div className="bodycontainer">
+                <div className="body-container">
                     {/* <div className="backdrop"></div> */}
                     <img className="backdrop" src={backdrop} alt="Backdrop" />
                     <h1 className="h1-headings">BETTER TRANSPORT FOR BRUINS.</h1>
 
-                    <div className="quickcontainer">
-                        <Link to="/rides">
-                            <div className="textbox color1">Create a group</div>
+                    <div className="cta-buttons-container">
+                        <Link className="cta-links" to="/rides">
+                            <div className="create-a-group-btn button">Create a group</div>
                         </Link>
-                        <Link to="/rides">
-                            <div className="textbox color2">Find a ride</div>
+                        <Link className="cta-links" to="/rides">
+                            <div className="find-a-ride-btn button">Find a ride</div>
                         </Link>
                     </div>
 
@@ -71,36 +75,39 @@ function HomePage() {
                     )}
 
                     <div className="backing">
-                        <div className="infocontainer">
-                            <div className="infobox">
-                                <img className="icon" src={icon1} alt="icon1" />
+                        <div className="info-container">
+                            <div className="info-box">
+                                {/* <img className="icon" src={icon1} alt="icon1" /> */}
+                                <ComputerIcon className="computer-icon"/>
                                 <h2 className="h2-headings">Easy to use</h2>
-                                <p className="p-tags">
+                                <p className="icon-subtext">
                                     Browse existing ridesharing groups or create your own for an easy commute to and
                                     from UCLA
                                 </p>
                             </div>
                             <div className="divider"></div>
-                            <div className="infobox">
-                                <img className="icon" src={icon2} alt="icon2" />
+                            <div className="info-box">
+                                <img className="group-of-people icon" src={GroupOfPeople} alt="group of people" />
                                 <h2 className="h2-headings">Ride with fellow Bruins</h2>
-                                <p className="p-tags">
+                                <p className="icon-subtext">
                                     Groups are exclusively available to current UCLA students, eliminating the
                                     uncertainty of carpooling with complete strangers
                                 </p>
                             </div>
                             <div className="divider"></div>
-                            <div className="infobox">
-                                <img className="icon" src={icon3} alt="icon3" />
+                            <div className="info-box">
+                                <img className="money icon" src={Money} alt="money" />
                                 <h2 className="h2-headings">Save money</h2>
-                                <p className="p-tags">
+                                <p className="icon-subtext">
                                     Cut down on expensive rides by splitting the fare among several people!
                                 </p>
                             </div>
+                            <div className="divider"></div>
                         </div>
-                        <div className="additionalinfocontainer">
-                            <div className="additionalinfo"></div>
-                            <div className="additionalinfotext">Get back to the place you call home.</div>
+                        <div className="additional-info-container">
+                            {/* <div className="additional-info"></div> */}
+                            <img className="additional-info-img" src={JansSteps} alt="jans steps"></img>
+                            <div className="additional-info-text">Get back to the place you call home.</div>
                         </div>
                         <div className="bottom">
                             <div className="logo">
@@ -109,8 +116,8 @@ function HomePage() {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </main>
+            <Footer />
         </>
     )
 }
