@@ -2,9 +2,11 @@
 
 .error-message {
     color: red;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .create-ride-post-btn {
-    margin-right: 3em !important;
+    margin-right: 100px !important;
     background-color: #5ea8f8 !important;
 }

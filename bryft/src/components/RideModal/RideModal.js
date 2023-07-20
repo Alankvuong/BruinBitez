@@ -10,10 +10,9 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs, { Dayjs } from 'dayjs';
 
-
 export default function RideModal() {
   const [open, setOpen] = useState(false);
-  const [dateTime, setDateTime] = useState(dayjs('2022-04-17T15:30'));
+  const [dateTime, setDateTime] = useState(dayjs());
   const [rideData, setRideData] = useState({
     origin: '',
     destination: '',
@@ -22,7 +21,7 @@ export default function RideModal() {
     driverUid: '',
     riderUids: [],
     numSpots: 0,
-    dateTime: '',
+    dateTime: dateTime,
     displayDateTime: ''
   });
 
@@ -129,7 +128,7 @@ export default function RideModal() {
             <TextField inputProps={{min: 0}} required label="Number Of Passengers You Want To Take" name="numSpots" type="number" value={rideData.numSpots} onChange={handleChange} margin="normal" fullWidth />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DateTimePicker']}>
-                <DateTimePicker label="Departure Date and Time" value={rideData.dateTime} onChange={(newDatetime) => setDateTime(newDatetime)} disablePast />
+                <DateTimePicker slotProps={{ textField: { error: false } }} label="Departure Date and Time" value={rideData?.dateTime || dayjs()} onChange={(newDatetime) => setDateTime(newDatetime)} disablePast />
               </DemoContainer>
             </LocalizationProvider>
           </form>
