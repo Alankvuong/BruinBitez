@@ -10,17 +10,29 @@ body {
     flex: 1;
 }
 
-.user-container {
-    max-width: 350px;
+.user-info-container {
+    max-width: 460px;
     margin-left: 40px;
+    max-height: 1200px;
     margin-top: 2.5%;
+    background-color: #cde4fd;
+    border-radius: 20px;
+    margin-bottom: 10%;
+}
+
+.user-info {
+    width: auto;
+    height: auto;
+    padding: 0 5% 5% 5%;
 }
 
 .user-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    margin-top: 5%;
-    margin-left: 5%;
-    max-height: 400px;
+    margin: 5% auto;
+    max-height: 460px;
     max-width: 350px;
     height: auto;
     border-radius: 10px;
@@ -35,20 +47,18 @@ body {
         padding-left: 5.5%;
         font-size: 2em;
         margin: 5px 10px 5px 0px;
-        /* width: 100%; */
+        width: 100%;
     }
 
     .review-star-icon {
         font-size: 2em;
-        color: gray;
+        color: #FFD700;
     }
 
     .avg-user-rating {
         font-size: 1.4em;
         text-align: center;
         color: rgb(79, 78, 78);
-
-        /* padding-top: 2px; */
     }
 }
 
@@ -58,13 +68,12 @@ body {
     margin-top: -2px;
     font-size: 1.3em;
     margin-bottom: -10px;
-    width: 100%;
 }
 
 .user-bio {
     position: relative;
     padding-left: 5.5%;
-    width: 360px;
+    width: auto;
 }
 
 .edit-profile-btn {
@@ -77,6 +86,7 @@ body {
     cursor: pointer;
     margin: 10px;
 }
+
 .user-reviews-container {
     /* margin-left: 4%; */
     margin-top: 15px;
@@ -101,7 +111,8 @@ body {
 
 .review-title {
     text-align: center;
-    /* padding-top: 10px; */
+    display: flex;
+    align-items: center;
 }
 
 .review-date {
@@ -139,10 +150,6 @@ body {
     border-radius: 10px !important;
 }
 
-.review-expanded {
-    /* background-color: #b7ddfc;  */
-}
-
 .no-reviews-container {
     width: 100%;
 }
@@ -153,6 +160,7 @@ body {
 
 .driver-link {
     color: #000000;
+    color: #5ea8f8;
 }
 
 .driver-link:hover {
@@ -161,7 +169,8 @@ body {
 }
 
 .encompassing-reviews-container {
-    max-width: 90%;
+    max-width: 100%;
+    width: 80%;
     margin-left: 100px;
     margin-top: 4%;
 
@@ -200,9 +209,7 @@ body {
         .reviews-heading {
             font-size: 2em;
             color: white;
-            /* text-decoration: underline; */
             text-align: center;
-            /* padding: 0.6em 0 0.6em 0; */
         }   
     }
 }
