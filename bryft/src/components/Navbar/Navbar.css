@@ -10,10 +10,10 @@
 }
 
 .navbar-logo a {
+    font-family: 'Amiko', sans-serif;
     color: #111111;
     font-size: 1.5rem;
     text-decoration: none;
-    font-family: 'Amiko', sans-serif;
     margin: 1.5rem;
     letter-spacing: 2px;
 }
@@ -36,6 +36,74 @@
     margin-right: 3rem;
 }
 
+.mobile-hamburger {
+    display: none;
+
+    .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        background-color: #161616;
+    }
+
+    &.open {
+        .bar {
+            &:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+        
+            &:nth-child(2) {
+                opacity: 0;
+            }
+        
+            &:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .mobile-hamburger {
+        display: block;
+        margin-right: 10%;
+    }
+
+    .nav-link {
+        margin: 1.6rem;
+        font-size: 24px;
+    }
+
+    .navbar-links {
+        display: flex !important;
+        position: fixed;
+        left: -100%;
+        top: 3rem;
+        flex-direction: column;
+        background-color: #fff;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+    }
+
+    .navbar-links.open {
+        left: 0;
+    }
+
+    .login-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20% !important;
+    }
+}
   
 .navbar-links li a {
     color: #111111;
@@ -52,7 +120,7 @@
     text-decoration: underline;
 }
 
-.loginButton {
+.login-button {
     font-family: 'Amiko', sans-serif;
     border-radius: 22px;
     border-width: 0px;
