@@ -1,4 +1,3 @@
-import "./RiderProfile.css";
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 // import tempPhoto from "../DriverProfilePage/alan_temp_photo.jpg"
@@ -18,6 +17,7 @@ import Box from "@mui/material/Box";
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
 function RiderProfile() {
+    require("./RiderProfile.css");
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
@@ -131,17 +131,19 @@ function RiderProfile() {
         <>
             <Navbar/>
             <div className="rider-profile-page">
-                <div className="rider-container">
-                    <img className="rider-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
-                    <div className="name-rating">
-                        <h2 className="rider-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
-                        <StarBorderOutlinedIcon className="review-star-icon"/> 
-                        <p className="avg-user-rating">
-                            {userRating}
-                        </p>
+                <div className="rider-info-container">
+                    <div className="rider-info">
+                        <img className="rider-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
+                        <div className="name-rating">
+                            <h2 className="rider-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                            <StarBorderOutlinedIcon className="review-star-icon"/> 
+                            <p className="avg-user-rating">
+                                {userRating}
+                            </p>
+                        </div>
+                        <h4 className="rider-car">Model: { userInfo[0]?.data.car}</h4>
+                        <p className="rider-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                     </div>
-                    <h4 className="rider-car">Model: { userInfo[0]?.data.car}</h4>
-                    <p className="rider-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
                 <div className="encompassing-reviews-container">
@@ -150,8 +152,6 @@ function RiderProfile() {
                             <h3 className="reviews-heading">Reviews They've Given</h3>
                         </div>
                         <div className="review-button-section">
-                            {/* <Button className="add-review-btn" variant="outlined" onClick={handleShowReviewModal}>+ Add Review</Button> */}
-                            {/* {showReviewModal && <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />} */}
                         </div>
                         {reviews.length > 0 ? (
                             reviews.map((review, i) => (
@@ -160,7 +160,7 @@ function RiderProfile() {
                                 expandIcon={<ExpandMoreIcon />}
                                 className="review-title"
                                 >
-                                <div className="user-rating">
+                                <div className="rider-rating">
                                     {review.data.reviewRating.toFixed(1)}
                                 </div>
                                 <div className="review-title">{review.data.reviewTitle}</div>
@@ -187,8 +187,8 @@ function RiderProfile() {
                             </Accordion>
                             ))
                         ) : (
-                            <Box class="no-reviews-container" mt={2}>
-                                <Alert class="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
+                            <Box className="no-reviews-container" mt={2}>
+                                <Alert className="no-reviews-message" severity="info">This user currently has no reviews. Check back later for an update!</Alert>
                             </Box>
                         )}
                     </div>

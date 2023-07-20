@@ -15,7 +15,8 @@ import axios from "axios";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import StarIcon from '@mui/icons-material/Star';
+
 
 function DriverProfile() {
     const [showReviewModal, setShowReviewModal] = useState(false);
@@ -101,17 +102,19 @@ function DriverProfile() {
         <>
             <Navbar/>
             <div className="driver-profile-page">
-                <div className="driver-container">
-                    <img className="driver-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
-                    <div className="name-rating">
-                        <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
-                            <StarBorderOutlinedIcon className="review-star-icon"/> 
-                        <p className="avg-user-rating">
-                            {userRating}
-                        </p>
+                <div className="driver-info-container">
+                    <div className="driver-info">
+                        <img className="driver-photo" src={ userInfo ? userInfo[0]?.data.selectedImage : tempPhoto} alt="driver" />
+                        <div className="name-rating">
+                            <h2 className="user-name">{ userInfo[0]?.data.firstName} { userInfo[0]?.data.lastName }</h2>
+                                <StarIcon className="review-star-icon"/> 
+                            <p className="avg-user-rating">
+                                {userRating}
+                            </p>
+                        </div>
+                        <h4 className="driver-car">Model: { userInfo[0]?.data.car}</h4>
+                        <p className="driver-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                     </div>
-                    <h4 className="driver-car">Model: { userInfo[0]?.data.car}</h4>
-                    <p className="driver-bio"><b>Bio:</b> { userInfo[0]?.data.bio}</p>
                 </div>
 
                 <div className="driver-reviews-container">
@@ -129,7 +132,7 @@ function DriverProfile() {
                             expandIcon={<ExpandMoreIcon />}
                             className="review-title"
                             >
-                            <div className="user-rating">
+                            <div className="driver-rating">
                                 {review.data.reviewRating.toFixed(1)}
                             </div>
                             <div className="review-title">{review.data.reviewTitle}</div>
