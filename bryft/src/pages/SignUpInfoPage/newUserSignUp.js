@@ -230,7 +230,7 @@ export default function NewUserSignUp() {
                         <img
                             key={index}
                             src={image}
-                            alt={`Image ${index + 1}`}
+                            alt={`${index + 1}`}
                             className={`imageItem ${selectedImage === image ? "selectedImage" : ""}`}
                             onClick={() => handleImageClick(image)}
                         />

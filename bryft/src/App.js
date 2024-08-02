@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate
 } from 'react-router-dom'
 import { AuthContextProvider } from './context/AuthContext';
 import Protected from './components/Navbar/ProtectedNav';
@@ -12,7 +11,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import RidesPage from "./pages/RidesPage/RidesPage";
 import DriverProfile from './pages/DriverProfilePage/DriverProfile';
 import UserProfile from './pages/UserProfilePage/UserProfile';
-import UserInfoPage from './pages/UserInfoPage/UserInfoPage';
+// import UserInfoPage from './pages/UserInfoPage/UserInfoPage';
 import NewUserSignUp from './pages/SignUpInfoPage/newUserSignUp';
 import RiderProfile from './pages/RiderProfile/RiderProfile';
 

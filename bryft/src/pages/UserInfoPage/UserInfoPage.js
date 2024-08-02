@@ -22,7 +22,7 @@ function UserInfoPage({ onClose, userInfo }) {
         onClose();
       }
     });
-  }, []);
+  }, [onClose]);
 
   const handleLabelClick = () => {
     setLabelVisible(!labelVisible);

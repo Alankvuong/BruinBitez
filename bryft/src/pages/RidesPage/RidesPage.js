@@ -1,7 +1,7 @@
 import Navbar from "../../components/Navbar/Navbar";
 import '@fontsource/amiko';
 import './RidesPage.css'
-import { Typography, Box, Container, RadioGroup, FormControlLabel, Radio, Checkbox } from "@mui/material";
+import { Typography, Box, Container, FormControlLabel, Checkbox } from "@mui/material";
 import React, { useState, useEffect } from 'react';
 import RideModal from "../../components/RideModal/RideModal";
 import RidePost from "../../components/RidePost/RidePost";
@@ -25,7 +25,7 @@ const theme = createTheme({
   });
 
 export default function RidesPage() {
-    const [fetchedRides, setFetchedRides] = useState([]);
+    // const [fetchedRides, setFetchedRides] = useState([]);
     const [queryParams, setQueryParams] = useState({});
     const [selectedValues, setSelectedValues] = useState({
         origin: '',
@@ -40,7 +40,7 @@ export default function RidesPage() {
         console.log(queryParams);
         axios.get('http://localhost:8000/api/get-rides', { params: queryParams })
             .then((response) => {
-                setFetchedRides(response);
+                // setFetchedRides(response);
                 // Sort rides from closest date to farthest date
                 const sortedRides = response.data.sort((a, b) => {
                     const dateTimeA = new Date(a.dateTime);
