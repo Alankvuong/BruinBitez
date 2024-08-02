@@ -66,6 +66,10 @@ export default function RidePost({ ridesObject }) {
         setOpen(false);
         window.location.reload();
     }
+    
+    const handleCancel = () => {
+        setOpen(false);
+    }
 
     const changeSpots = () => {
         if (!joinedRide) {
@@ -168,7 +172,7 @@ export default function RidePost({ ridesObject }) {
                 {!isLoggedIn && <div className="error-message">You need to be logged in to join a ride!</div>}
                 {userEqualsDriver && <div className="error-message">You are the driver!</div>}
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleCancel} color="primary">
                         Cancel
                     </Button>
                     {!joinedRide ? <Button onClick={handleJoin} color="primary" variant="contained" disabled={!isLoggedIn || userEqualsDriver || spots <= 0}>
